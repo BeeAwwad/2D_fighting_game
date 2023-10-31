@@ -8,12 +8,10 @@ const useCanvas = draw => {
     
     const canvas = ref.current
     const context = canvas.getContext('2d')
-    let count = 0
     let animationId
     
     const renderer = () => {
-      count++
-      draw(context, count)
+      draw(context)
       animationId = window.requestAnimationFrame(renderer)
     }
     renderer()

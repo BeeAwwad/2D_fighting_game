@@ -8,8 +8,8 @@ class Sprite {
     ctx.fillStyle = "red";
     ctx.fillRect(this.position.x, this.position.y, 50, 150);
   }
-  update() {
-    this.draw();
+  update(ctx) {
+    this.draw(ctx);
     this.position.y += 10;
   }
 }

@@ -1,12 +1,11 @@
-import useCanvas from "./usecanvas";
+import useCanvas from './useCanvas'
 
-function Canvas(props) {
-
-  const { draw, ...rest } = props;
-  const canvasRef = useCanvas(draw);
-
-
-  return <canvas ref={canvasRef} {...rest} />;
+const Canvas = props => {  
+  
+  const { draw, ...rest } = props
+  const ref = useCanvas(draw)
+  
+  return <canvas ref={ref} {...rest}/>
 }
 
-export default Canvas;
+export default Canvas

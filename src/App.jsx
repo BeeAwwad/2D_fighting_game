@@ -2,6 +2,10 @@ import Canvas from "./components/canvas";
 import Sprite from "./components/sprite";
 
 function App() {
+  
+  const canvasHeight = 576;
+  const canvasWidth = 1024;
+
   const player = new Sprite({
     position: {
       x: 100,
@@ -9,8 +13,9 @@ function App() {
     },
     velocity: {
       x: 0,
-      y: 0,
+      y: 10,
     },
+    canvasHeight: canvasHeight,
   });
 
   const enemy = new Sprite({
@@ -22,6 +27,7 @@ function App() {
       x: 0,
       y: 0,
     },
+    canvasHeight: canvasHeight,
   });
   const draw = (ctx) => {
     const canvasWidth = ctx.canvas.width;
@@ -34,9 +40,8 @@ function App() {
   return (
     <Canvas
       draw={draw}
-      width="1024"
-      height="576"
-      style={{ border: "10px solid black" }}
+      width={canvasWidth}
+      height={canvasHeight}
       player={player}
       enemy={enemy}
     />

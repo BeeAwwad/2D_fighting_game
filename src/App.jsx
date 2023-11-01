@@ -2,9 +2,9 @@ import Canvas from "./components/canvas";
 import Sprite from "./components/sprite";
 
 function App() {
-  
   const canvasHeight = 576;
   const canvasWidth = 1024;
+  const gravity = 0.2;
 
   const player = new Sprite({
     position: {
@@ -13,9 +13,10 @@ function App() {
     },
     velocity: {
       x: 0,
-      y: 10,
+      y: 0,
     },
     canvasHeight: canvasHeight,
+    gravity: gravity,
   });
 
   const enemy = new Sprite({
@@ -28,7 +29,9 @@ function App() {
       y: 0,
     },
     canvasHeight: canvasHeight,
+    gravity: gravity,
   });
+
   const draw = (ctx) => {
     const canvasWidth = ctx.canvas.width;
     const canvasHeight = ctx.canvas.height;
@@ -44,6 +47,7 @@ function App() {
       height={canvasHeight}
       player={player}
       enemy={enemy}
+      // gravity={gravity}
     />
   );
 }

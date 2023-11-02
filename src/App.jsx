@@ -1,11 +1,13 @@
 import Canvas from "./components/canvas";
 import Sprite from "./components/sprite";
-import { useEffect } from "react";
+import Keys from "./components/keys";
+import { useEffect, useRef } from "react";
 
 function App() {
   const canvasHeight = 576;
   const canvasWidth = 1024;
   const gravity = 0.2;
+  const lastKey = useRef(null);
 
   // Player Sprite
   const player = new Sprite({
@@ -24,7 +26,7 @@ function App() {
   // Enemy Sprite
   const enemy = new Sprite({
     position: {
-      x: 900,
+      x: 850,
       y: 100,
     },
     velocity: {
@@ -46,20 +48,31 @@ function App() {
 
   // Add an event listener to respond to the "d" key press
   useEffect(() => {
-    const handleKeyPress = (e) => {
+    const handleKeyDown = (e) => {
       if (e.key === "d") {
-        // Update the player's position by increasing the x-coordinate
-        player.position.x += 5; // Adjust the value as needed
+        Keys.d.pressed = true;
+        lastKey.current = "d";
       } else if (e.key === "a") {
-        player.position.x -= 5;
+        Keys.a.pressed = true;
+        lastKey.current = "a";
       }
     };
 
-    window.addEventListener("keydown", handleKeyPress);
+    const handleKeyUp = (e) => {
+      if (e.key === "d") {
+        Keys.d.pressed = false;
+      } else if (e.key === "a") {
+        Keys.a.pressed = false;
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("keyup", handleKeyUp);
 
     // Clean up the event listener when the component unmounts
     return () => {
-      window.removeEventListener("keydown", handleKeyPress);
+      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("keyup", handleKeyUp);
     };
   }, [player]);
 
@@ -70,7 +83,7 @@ function App() {
       height={canvasHeight}
       player={player}
       enemy={enemy}
-      // gravity={gravity}
+      lastKey={lastKey}
     />
   );
 }

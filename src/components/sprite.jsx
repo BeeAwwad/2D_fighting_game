@@ -13,7 +13,10 @@ class Sprite {
   }
   update(ctx) {
     this.draw(ctx);
+
+    this.position.x += this.velocity.x;
     this.position.y += this.velocity.y;
+
     if (this.position.y + this.height + this.velocity.y >= this.canvasHeight) {
       this.velocity.y = 0;
     } else {

@@ -36,18 +36,12 @@ function App() {
     gravity: gravity,
   });
 
-  // create black canvas fuction
-  const draw = (ctx) => {
-    const canvasWidth = ctx.canvas.width;
-    const canvasHeight = ctx.canvas.height;
-    ctx.fillStyle = "black";
-
-    ctx.fillRect(0, 0, canvasWidth, canvasHeight);
-  };
+  
 
   // Add an event listener to respond to the "d" key press
   useEffect(() => {
     const handleKeyDown = (e) => {
+      console.log(e.button)
       if (e.key === "d") {
         Keys.d.pressed = true;
         player.lastKey = "d";
@@ -81,7 +75,6 @@ function App() {
 
   return (
     <Canvas
-      draw={draw}
       width={canvasWidth}
       height={canvasHeight}
       player={player}

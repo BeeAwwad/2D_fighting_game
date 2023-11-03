@@ -1,3 +1,4 @@
+import { DrawPlayer } from "./drawFunc";
 // class for making new players
 class Sprite {
   constructor({ position, velocity, canvasHeight, gravity }) {
@@ -6,14 +7,11 @@ class Sprite {
     this.height = 150;
     this.canvasHeight = canvasHeight;
     this.gravity = gravity;
-    this.lastKey = null;
+    this.lastKey 
   }
-  draw(ctx) {
-    ctx.fillStyle = "red";
-    ctx.fillRect(this.position.x, this.position.y, 50, this.height);
-  }
+  
   update(ctx) {
-    this.draw(ctx);
+    DrawPlayer(ctx, this);
 
     this.position.x += this.velocity.x;
     this.position.y += this.velocity.y;

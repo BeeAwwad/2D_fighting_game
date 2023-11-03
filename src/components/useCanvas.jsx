@@ -1,7 +1,8 @@
 import { useRef, useEffect } from "react";
 import Keys from "./keys";
+import { DrawCanvas } from "./drawFunc";
 
-const useCanvas = (draw, player, enemy) => {
+const useCanvas = (player, enemy) => {
   const ref = useRef(null);
 
   // this useEffect renders the drawing to the canvas
@@ -12,7 +13,7 @@ const useCanvas = (draw, player, enemy) => {
 
     // renders the canvas, player and enemy
     const renderer = () => {
-      draw(context);
+      DrawCanvas(context);
       animationId = window.requestAnimationFrame(renderer);
       player.update(context);
       enemy.update(context);
@@ -31,7 +32,7 @@ const useCanvas = (draw, player, enemy) => {
     return () => {
       window.cancelAnimationFrame(animationId);
     };
-  }, [draw, player, enemy]);
+  }, [player, enemy]);
 
   return ref;
 };

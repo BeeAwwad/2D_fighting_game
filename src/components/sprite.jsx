@@ -6,6 +6,7 @@ class Sprite {
     this.height = 150;
     this.canvasHeight = canvasHeight;
     this.gravity = gravity;
+    this.lastKey = null;
   }
   draw(ctx) {
     ctx.fillStyle = "red";

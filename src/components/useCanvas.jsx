@@ -1,9 +1,8 @@
 import { useRef, useEffect } from "react";
 import Keys from "./keys";
 
-const useCanvas = (draw, player, enemy, lastKey) => {
+const useCanvas = (draw, player, enemy) => {
   const ref = useRef(null);
-  
 
   // this useEffect renders the drawing to the canvas
   useEffect(() => {
@@ -20,10 +19,10 @@ const useCanvas = (draw, player, enemy, lastKey) => {
 
       player.velocity.x = 0;
 
-      if (Keys.a.pressed && lastKey.current === 'a') {
-        player.velocity.x = -1;
-      } else if (Keys.d.pressed && lastKey.current === 'd') {
-        player.velocity.x = 1;
+      if (Keys.a.pressed && player.lastKey === "a") {
+        player.velocity.x = -5;
+      } else if (Keys.d.pressed && player.lastKey === "d") {
+        player.velocity.x = 5;
       }
     };
     renderer();
@@ -32,7 +31,7 @@ const useCanvas = (draw, player, enemy, lastKey) => {
     return () => {
       window.cancelAnimationFrame(animationId);
     };
-  }, [draw, player, enemy, lastKey]);
+  }, [draw, player, enemy]);
 
   return ref;
 };

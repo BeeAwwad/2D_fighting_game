@@ -5,6 +5,9 @@ const Keys = {
   d: {
     pressed: false,
   },
+  space: {
+    pressed: false,
+  },
 };
 
 export default Keys;

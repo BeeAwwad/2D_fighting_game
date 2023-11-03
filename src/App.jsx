@@ -1,13 +1,12 @@
 import Canvas from "./components/canvas";
 import Sprite from "./components/sprite";
 import Keys from "./components/keys";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 
 function App() {
   const canvasHeight = 576;
   const canvasWidth = 1024;
-  const gravity = 0.2;
-  const lastKey = useRef(null);
+  const gravity = 0.7;
 
   // Player Sprite
   const player = new Sprite({
@@ -51,10 +50,12 @@ function App() {
     const handleKeyDown = (e) => {
       if (e.key === "d") {
         Keys.d.pressed = true;
-        lastKey.current = "d";
+        player.lastKey = "d";
       } else if (e.key === "a") {
         Keys.a.pressed = true;
-        lastKey.current = "a";
+        player.lastKey = "a";
+      } else if (e.key === " ") {
+        player.velocity.y = -18;
       }
     };
 
@@ -63,6 +64,8 @@ function App() {
         Keys.d.pressed = false;
       } else if (e.key === "a") {
         Keys.a.pressed = false;
+      } else if (e.key === " ") {
+        Keys.space.pressed = false;
       }
     };
 
@@ -83,7 +86,6 @@ function App() {
       height={canvasHeight}
       player={player}
       enemy={enemy}
-      lastKey={lastKey}
     />
   );
 }

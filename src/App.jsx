@@ -79,6 +79,7 @@ function App() {
     };
   }, [player]);
 
+  console.log(player.attackBox.position.y)
   return (
     <Canvas
       width={canvasWidth}

@@ -20,10 +20,21 @@ const useCanvas = (player, enemy) => {
 
       player.velocity.x = 0;
 
+      // move player left(a) or right(d)
       if (Keys.a.pressed && player.lastKey === "a") {
         player.velocity.x = -5;
       } else if (Keys.d.pressed && player.lastKey === "d") {
         player.velocity.x = 5;
+      }
+
+      // attack player
+      if (
+        player.position.x + player.attackBox.width >= enemy.position.x &&
+        player.position.x <= enemy.position.x + enemy.width &&
+        player.position.y + player.attackBox.height >= enemy.position.y &&
+        player.attackBox.position.y <= enemy.position.y + enemy.height
+      ) {
+        console.log("I have been hit!");
       }
     };
     renderer();

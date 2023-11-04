@@ -5,6 +5,7 @@ class Sprite {
     this.position = position;
     this.velocity = velocity;
     this.height = 150;
+    this.width = 50;
     this.canvasHeight = canvasHeight;
     this.gravity = gravity;
     this.lastKey

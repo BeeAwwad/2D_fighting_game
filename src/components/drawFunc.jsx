@@ -9,7 +9,7 @@ const DrawCanvas = (ctx) => {
 // Draw Player
 const DrawPlayer = (ctx, sprite) => {
   ctx.fillStyle = sprite.color.body;
-  ctx.fillRect(sprite.position.x, sprite.position.y, 50, sprite.height);
+  ctx.fillRect(sprite.position.x, sprite.position.y, sprite.width, sprite.height);
 
   // attack box
   ctx.fillStyle = sprite.color.attack;

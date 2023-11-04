@@ -20,6 +20,10 @@ function App() {
     },
     canvasHeight: canvasHeight,
     gravity: gravity,
+    color: {
+      body: "red",
+      attack: "blue",
+    },
   });
 
   // Enemy Sprite
@@ -34,14 +38,16 @@ function App() {
     },
     canvasHeight: canvasHeight,
     gravity: gravity,
+    color: {
+      body: "orange",
+      attack: "green",
+    },
   });
-
-  
 
   // Add an event listener to respond to the "d" key press
   useEffect(() => {
     const handleKeyDown = (e) => {
-      console.log(e.button)
+      console.log(e.button);
       if (e.key === "d") {
         Keys.d.pressed = true;
         player.lastKey = "d";

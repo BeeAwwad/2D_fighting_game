@@ -7,8 +7,17 @@ const DrawCanvas = (ctx) => {
   ctx.fillRect(0, 0, canvasWidth, canvasHeight);
 };
 // Draw Player
-const DrawPlayer = (ctx, sprite) =>{
-    ctx.fillStyle = "red";
-    ctx.fillRect(sprite.position.x, sprite.position.y, 50, sprite.height);
-  }
+const DrawPlayer = (ctx, sprite) => {
+  ctx.fillStyle = sprite.color.body;
+  ctx.fillRect(sprite.position.x, sprite.position.y, 50, sprite.height);
+
+  // attack box
+  ctx.fillStyle = sprite.color.attack;
+  ctx.fillRect(
+    sprite.attackBox.position.x,
+    sprite.attackBox.position.y,
+    sprite.attackBox.width,
+    sprite.attackBox.height
+  );
+};
 export { DrawCanvas, DrawPlayer };

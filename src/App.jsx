@@ -69,17 +69,26 @@ function App() {
       }
     };
 
+    // attack function
+    const handleAttack = (e) => {
+      if (e.button === 0) {
+        player.attack()
+      }
+    }
+
     window.addEventListener("keydown", handleKeyDown);
     window.addEventListener("keyup", handleKeyUp);
+    window.addEventListener("mousedown", handleAttack);
 
     // Clean up the event listener when the component unmounts
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
       window.removeEventListener("keyup", handleKeyUp);
+      window.removeEventListener("mousedown", handleAttack);
     };
   }, [player]);
 
-  console.log(player.attackBox.position.y)
+
   return (
     <Canvas
       width={canvasWidth}

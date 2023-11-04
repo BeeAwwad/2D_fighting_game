@@ -1,25 +1,26 @@
 import { DrawPlayer } from "./drawFunc";
 // class for making new players
 class Sprite {
-  constructor({ position, velocity, canvasHeight, gravity,color }) {
+  constructor({ position, velocity, canvasHeight, gravity, color }) {
     this.position = position;
     this.velocity = velocity;
     this.height = 150;
     this.width = 50;
     this.canvasHeight = canvasHeight;
     this.gravity = gravity;
-    this.lastKey
+    this.lastKey;
     this.attackBox = {
       position: this.position,
       width: 100,
       height: 50,
-    }
+    };
     this.color = {
       body: color.body,
       attack: color.attack,
-    }
+    };
+    this.isAttacking
   }
-  
+
   update(ctx) {
     DrawPlayer(ctx, this);
 
@@ -31,6 +32,13 @@ class Sprite {
     } else {
       this.velocity.y += this.gravity;
     }
+  }
+
+  attack() {
+    this.isAttacking = true;
+    setTimeout(() => {
+      this.isAttacking = false;
+    }, 100);
   }
 }
 

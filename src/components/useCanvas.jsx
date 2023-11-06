@@ -11,6 +11,19 @@ const useCanvas = (player, enemy) => {
     const context = canvas.getContext("2d");
     let animationId;
 
+    // collision statements between attack box and body box
+    const rectangularCollision = ({ rectangle1, rectangle2 }) => {
+      return (
+        rectangle1.position.x + rectangle1.attackBox.width >=
+          rectangle2.position.x &&
+        rectangle1.position.x <= rectangle2.position.x + rectangle2.width &&
+        rectangle1.position.y + rectangle1.attackBox.height >=
+          rectangle2.position.y &&
+        rectangle1.attackBox.position.y <=
+          rectangle2.position.y + rectangle2.height
+      );
+    };
+
     // renders the canvas, player and enemy
     const renderer = () => {
       DrawCanvas(context);
@@ -29,10 +42,11 @@ const useCanvas = (player, enemy) => {
 
       // attack player
       if (
-        player.position.x + player.attackBox.width >= enemy.position.x &&
-        player.position.x <= enemy.position.x + enemy.width &&
-        player.position.y + player.attackBox.height >= enemy.position.y &&
-        player.attackBox.position.y <= enemy.position.y + enemy.height && player.isAttacking
+        rectangularCollision({
+          rectangle1: player,
+          rectangle2: enemy,
+        }) &&
+        player.isAttacking
       ) {
         console.log("I have been hit!");
       }

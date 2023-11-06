@@ -79,7 +79,6 @@ function App() {
 
     // attack function
     const handleAttack = (e) => {
-      console.log(e.button);
       if (e.button === 0) {
         player.attack()
       }

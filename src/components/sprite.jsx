@@ -28,6 +28,7 @@ class Sprite {
   update(ctx) {
     DrawPlayer(ctx, this);
 
+    // this part allow me to be able to reverse the attack box of the enemy using the sprite.attackBox.offset property
     this.attackBox.position.x = this.position.x + this.attackBox.offset.x;
     this.attackBox.position.y = this.position.y;
 

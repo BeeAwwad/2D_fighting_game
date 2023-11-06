@@ -9,15 +9,22 @@ const DrawCanvas = (ctx) => {
 // Draw Player
 const DrawPlayer = (ctx, sprite) => {
   ctx.fillStyle = sprite.color.body;
-  ctx.fillRect(sprite.position.x, sprite.position.y, sprite.width, sprite.height);
+  ctx.fillRect(
+    sprite.position.x,
+    sprite.position.y,
+    sprite.width,
+    sprite.height
+  );
 
   // attack box
-  ctx.fillStyle = sprite.color.attack;
-  ctx.fillRect(
-    sprite.attackBox.position.x,
-    sprite.attackBox.position.y,
-    sprite.attackBox.width,
-    sprite.attackBox.height
-  );
+//   if (sprite.isAttacking) {
+    ctx.fillStyle = sprite.color.attack;
+    ctx.fillRect(
+      sprite.attackBox.position.x,
+      sprite.attackBox.position.y,
+      sprite.attackBox.width,
+      sprite.attackBox.height
+    );
+//   }
 };
 export { DrawCanvas, DrawPlayer };

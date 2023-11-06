@@ -18,6 +18,10 @@ function App() {
       x: 0,
       y: 0,
     },
+    offset: {
+      x: 0,
+      y: 0,
+    },
     canvasHeight: canvasHeight,
     gravity: gravity,
     color: {
@@ -36,6 +40,10 @@ function App() {
       x: 0,
       y: 0,
     },
+    offset: {
+      x: -50,
+      y: 0,
+    },
     canvasHeight: canvasHeight,
     gravity: gravity,
     color: {
@@ -47,7 +55,7 @@ function App() {
   // Add an event listener to respond to the "d" key press
   useEffect(() => {
     const handleKeyDown = (e) => {
-      console.log(e.button);
+      
       if (e.key === "d") {
         Keys.d.pressed = true;
         player.lastKey = "d";
@@ -71,6 +79,7 @@ function App() {
 
     // attack function
     const handleAttack = (e) => {
+      console.log(e.button);
       if (e.button === 0) {
         player.attack()
       }

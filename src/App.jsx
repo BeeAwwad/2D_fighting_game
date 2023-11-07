@@ -1,33 +1,11 @@
 import Canvas from "./components/canvas";
 import Keys from "./components/keys";
 import { useEffect } from "react";
-import playerSprite from "./components/playerSprite";
-import botSprite from "./components/botSprite";
+import playerSprite from "./components/fighters/playerSprite";
+import botSprite from "./components/fighters/botSprite";
 import gameWorld from "./components/gameWorld";
 
 function App() {
-  // Enemy Sprite
-  // const enemy = new Sprite({
-  //   position: {
-  //     x: 850,
-  //     y: 100,
-  //   },
-  //   velocity: {
-  //     x: 0,
-  //     y: 0,
-  //   },
-  //   offset: {
-  //     x: -50,
-  //     y: 0,
-  //   },
-  //   canvasHeight: gameWorld.canvasHeight,
-  //   gravity: gameWorld.gravity,
-  //   color: {
-  //     body: "orange",
-  //     attack: "green",
-  //   },
-  // });
-
   // Add an event listener to respond to the "d" key press
   useEffect(() => {
     const handleKeyDown = (e) => {

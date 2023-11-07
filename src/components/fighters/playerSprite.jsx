@@ -1,5 +1,5 @@
-import Sprite from "./sprite";
-import gameWorld from "./gameWorld";
+import Sprite from "../sprite";
+import gameWorld from "../gameWorld";
 
 // Player Sprite
 const playerSprite = new Sprite({

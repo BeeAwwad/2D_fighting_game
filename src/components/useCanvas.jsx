@@ -1,6 +1,7 @@
 import { useRef, useEffect } from "react";
 import Keys from "./keys";
 import { DrawCanvas } from "./drawFunc";
+import updateBot from "./botLogic";
 
 const useCanvas = (player, enemy) => {
   const ref = useRef(null);
@@ -30,6 +31,7 @@ const useCanvas = (player, enemy) => {
       animationId = window.requestAnimationFrame(renderer);
       player.update(context);
       enemy.update(context);
+      updateBot(enemy, player);
 
       player.velocity.x = 0;
 

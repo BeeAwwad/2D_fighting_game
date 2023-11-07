@@ -1,15 +1,16 @@
 const updateBot = (bot, player) => {
     // Implement bot logic here
     
-    if (bot.position.x < player.position.x) {
+    if (bot.position.x + bot.attackBox.width < player.position.x) {
       // Move the bot right
-      bot.velocity.x = 2;
-    } else if (bot.position.x > player.position.x) {
+      bot.velocity.x = 1;
+    } else if (bot.position.x - bot.attackBox.width > player.position.x) {
       // Move the bot left
-      bot.velocity.x = -2;
+      bot.velocity.x = -1;
     } else {
       // Stop moving if the bot is aligned with the player
       bot.velocity.x = 0;
+      bot.attack();
     }
   
     // Implement attack logic here

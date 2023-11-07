@@ -18,8 +18,8 @@ const playerSprite = new Sprite({
   canvasHeight: gameWorld.canvasHeight,
   gravity: gameWorld.gravity,
   color: {
-    body: "red",
-    attack: "blue",
+    body: "#DF1F2D",
+    attack: "#2B3784",
   },
 });
 

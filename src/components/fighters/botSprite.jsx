@@ -17,8 +17,8 @@ const botSprite = new Sprite({
   canvasHeight: gameWorld.canvasHeight,
   gravity: gameWorld.gravity,
   color: {
-    body: "purple", // Choose a color for the bot
-    attack: "green",
+    body: "#7B1E57", // Choose a color for the bot
+    attack: "#A9C53D",
   },
 });
 

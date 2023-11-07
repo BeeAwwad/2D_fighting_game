@@ -40,13 +40,23 @@ const useCanvas = (player, enemy) => {
         player.velocity.x = 5;
       }
 
-      // attack player
+      // detect successful attack
       if (
         rectangularCollision({
           rectangle1: player,
           rectangle2: enemy,
         }) &&
         player.isAttacking
+      ) {
+        console.log("Jab!");
+      }
+
+      if (
+        rectangularCollision({
+          rectangle1: enemy,
+          rectangle2: player,
+        }) &&
+        enemy.isAttacking
       ) {
         console.log("I have been hit!");
       }

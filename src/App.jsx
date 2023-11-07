@@ -4,9 +4,11 @@ import Keys from "./components/keys";
 import { useEffect } from "react";
 
 function App() {
-  const canvasHeight = 576;
-  const canvasWidth = 1024;
-  const gravity = 0.7;
+  const gameWorld = {
+    canvasHeight: 576,
+    canvasWidth: 1024,
+    gravity: 0.7,
+  };
 
   // Player Sprite
   const player = new Sprite({
@@ -22,8 +24,8 @@ function App() {
       x: 0,
       y: 0,
     },
-    canvasHeight: canvasHeight,
-    gravity: gravity,
+    canvasHeight: gameWorld.canvasHeight,
+    gravity: gameWorld.gravity,
     color: {
       body: "red",
       attack: "blue",
@@ -44,8 +46,8 @@ function App() {
       x: -50,
       y: 0,
     },
-    canvasHeight: canvasHeight,
-    gravity: gravity,
+    canvasHeight: gameWorld.canvasHeight,
+    gravity: gameWorld.gravity,
     color: {
       body: "orange",
       attack: "green",
@@ -55,7 +57,6 @@ function App() {
   // Add an event listener to respond to the "d" key press
   useEffect(() => {
     const handleKeyDown = (e) => {
-      
       if (e.key === "d") {
         Keys.d.pressed = true;
         player.lastKey = "d";
@@ -80,9 +81,9 @@ function App() {
     // attack function
     const handleAttack = (e) => {
       if (e.button === 0) {
-        player.attack()
+        player.attack();
       }
-    }
+    };
 
     window.addEventListener("keydown", handleKeyDown);
     window.addEventListener("keyup", handleKeyUp);
@@ -96,14 +97,15 @@ function App() {
     };
   }, [player]);
 
-
   return (
-    <Canvas
-      width={canvasWidth}
-      height={canvasHeight}
-      player={player}
-      enemy={enemy}
-    />
+    <div>
+      <Canvas
+        width={gameWorld.canvasWidth}
+        height={gameWorld.canvasHeight}
+        player={player}
+        enemy={enemy}
+      />
+    </div>
   );
 }
 

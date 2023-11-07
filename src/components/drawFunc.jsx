@@ -17,7 +17,7 @@ const DrawPlayer = (ctx, sprite) => {
   );
 
   // attack box
-//   if (sprite.isAttacking) {
+  if (sprite.isAttacking) {
     ctx.fillStyle = sprite.color.attack;
     ctx.fillRect(
       sprite.attackBox.position.x,
@@ -25,6 +25,6 @@ const DrawPlayer = (ctx, sprite) => {
       sprite.attackBox.width,
       sprite.attackBox.height
     );
-//   }
+  }
 };
 export { DrawCanvas, DrawPlayer };

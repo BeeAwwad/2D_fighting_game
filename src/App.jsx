@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import playerSprite from "./components/fighters/playerSprite";
 import botSprite from "./components/fighters/botSprite";
 import gameWorld from "./components/gameWorld";
+import GameBar from "./components/topBarComponents/GameBar";
 
 function App() {
   // Add an event listener to respond to the "d" key press
@@ -51,6 +52,7 @@ function App() {
 
   return (
     <div>
+      <GameBar/>
       <Canvas
         width={gameWorld.canvasWidth}
         height={gameWorld.canvasHeight}

@@ -15,9 +15,12 @@ const useCanvas = (player, enemy) => {
     // collision statements between attack box and body box
     const rectangularCollision = ({ rectangle1, rectangle2 }) => {
       return (
-        rectangle1.position.x + rectangle1.attackBox.width >=
+        rectangle1.position.x +
+          rectangle1.attackBox.width +
+          rectangle1.attackBox.offset.x >=
           rectangle2.position.x &&
-        rectangle1.position.x <= rectangle2.position.x + rectangle2.width &&
+        rectangle1.position.x + rectangle1.attackBox.offset.x <=
+          rectangle2.position.x + rectangle2.width &&
         rectangle1.position.y + rectangle1.attackBox.height >=
           rectangle2.position.y &&
         rectangle1.attackBox.position.y <=
@@ -31,6 +34,7 @@ const useCanvas = (player, enemy) => {
       animationId = window.requestAnimationFrame(renderer);
       player.update(context);
       enemy.update(context);
+      // render the bot logic
       updateBot(enemy, player);
 
       player.velocity.x = 0;

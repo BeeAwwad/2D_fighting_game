@@ -47,7 +47,7 @@ function App() {
       window.removeEventListener("keyup", handleKeyUp);
       window.removeEventListener("mousedown", handleAttack);
     };
-  }, [playerSprite]);
+  }, []);
 
   return (
     <div>

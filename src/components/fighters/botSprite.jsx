@@ -11,7 +11,7 @@ const botSprite = new Sprite({
     y: 0,
   },
   offset: {
-    x: 0,
+    x: -50,
     y: 0,
   },
   canvasHeight: gameWorld.canvasHeight,

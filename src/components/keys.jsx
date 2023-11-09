@@ -8,6 +8,15 @@ const Keys = {
   space: {
     pressed: false,
   },
+  ArrowRight: {
+    pressed: false,
+  },
+  ArrowLeft: {
+    pressed: false,
+  },
+  ArrowDown: {
+    pressed: false,
+  },
 };
 
 export default Keys;

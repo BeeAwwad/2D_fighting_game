@@ -51,7 +51,7 @@ function App() {
   }, []);
 
   return (
-    <div>
+    <div className="relative inline-block">
       <GameBar/>
       <Canvas
         width={gameWorld.canvasWidth}

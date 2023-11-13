@@ -2,9 +2,12 @@ import { useRef, useEffect } from "react";
 import Keys from "./keys";
 import { DrawCanvas } from "./drawFunc";
 import updateBot from "./botLogic";
+import { useDispatch } from "react-redux";
+import { affectPlayerHealth, affectEnemyHealth } from "../redux/health";
 
 const useCanvas = (player, enemy) => {
   const ref = useRef(null);
+  const dispatch = useDispatch();
 
   // this useEffect renders the drawing to the canvas
   useEffect(() => {
@@ -55,6 +58,7 @@ const useCanvas = (player, enemy) => {
         player.isAttacking
       ) {
         console.log("Jab!");
+        dispatch(affectEnemyHealth(-10));
       }
 
       if (
@@ -65,6 +69,7 @@ const useCanvas = (player, enemy) => {
         enemy.isAttacking
       ) {
         console.log("I have been hit!");
+        dispatch(affectPlayerHealth(-10));
       }
     };
     renderer();

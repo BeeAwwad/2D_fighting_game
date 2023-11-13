@@ -57,7 +57,6 @@ const useCanvas = (player, enemy) => {
         }) &&
         player.isAttacking
       ) {
-        console.log("Jab!");
         dispatch(affectEnemyHealth(-10));
       }
 
@@ -68,7 +67,6 @@ const useCanvas = (player, enemy) => {
         }) &&
         enemy.isAttacking
       ) {
-        console.log("I have been hit!");
         dispatch(affectPlayerHealth(-10));
       }
     };

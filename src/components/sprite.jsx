@@ -23,6 +23,7 @@ class Sprite {
       attack: color.attack,
     };
     this.isAttacking;
+    this.attackCooldown = false; // Added property to track cooldown
   }
 
   update(ctx) {
@@ -40,13 +41,24 @@ class Sprite {
     } else {
       this.velocity.y += this.gravity;
     }
+
+    // checks if attack is cooling down and prevents the player from attacking multiple times in a row
+
+    if (this.attackCooldown) {
+      setTimeout(() => {
+        this.attackCooldown = false;
+      }, 1000);
+    }
   }
 
   attack() {
-    this.isAttacking = true;
-    setTimeout(() => {
-      this.isAttacking = false;
-    }, 100);
+    if (!this.isAttacking && !this.attackCooldown) {
+      this.isAttacking = true;
+      this.attackCooldown = true;
+      setTimeout(() => {
+        this.isAttacking = false;
+      }, 100);
+    }
   }
 }
 

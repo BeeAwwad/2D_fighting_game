@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  playerHealth: 0,
-  enemyHealth: 0,
+  playerHealth: 100,
+  enemyHealth: 100,
 };
 
 export const fightersHealthReducer = createSlice({

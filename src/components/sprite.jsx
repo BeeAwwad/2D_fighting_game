@@ -24,6 +24,7 @@ class Sprite {
     };
     this.isAttacking;
     this.attackCooldown = false; // Added property to track cooldown
+    this.health = 100;
   }
 
   update(ctx) {

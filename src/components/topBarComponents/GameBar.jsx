@@ -1,15 +1,13 @@
 import HealthBar from "./HealthBar";
 import Timer from "./Timer";
-import { useSelector } from "react-redux";
 
-function GameBar() {
-  const { playerHealth } = useSelector((state) => state.fighters);
-  const { enemyHealth } = useSelector((state) => state.fighters);
+function GameBar(props) {
+  const { player, enemy } = props;
   return (
     <div className="absolute flex w-full items-center p-4">
-      <HealthBar fighter={playerHealth} />
+      <HealthBar fighter={player} />
       <Timer />
-      <HealthBar fighter={enemyHealth} />
+      <HealthBar fighter={enemy} />
     </div>
   );
 }

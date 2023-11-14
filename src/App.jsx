@@ -5,12 +5,8 @@ import playerSprite from "./components/fighters/playerSprite";
 import botSprite from "./components/fighters/botSprite";
 import gameWorld from "./components/gameWorld";
 import GameBar from "./components/topBarComponents/GameBar";
-// import { useState } from "react";
 
 function App() {
-  // player and bot attacked
-  // const [playerAttacked, setPlayerAttacked] = useState(false);
-  // const [botAttacked, setBotAttacked] = useState(false);
 
   // Add an event listener to respond to the "wasd" key press
   useEffect(() => {
@@ -57,7 +53,7 @@ function App() {
 
   return (
     <div className="relative inline-block">
-      <GameBar />
+      <GameBar player={playerSprite} enemy={botSprite} />
       <Canvas
         width={gameWorld.canvasWidth}
         height={gameWorld.canvasHeight}

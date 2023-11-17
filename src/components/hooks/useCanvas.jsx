@@ -1,14 +1,22 @@
 import { useRef, useState, useEffect } from "react";
-import Keys from "./keys";
-import { DrawCanvas } from "./drawFunc";
-import updateBot from "./botLogic";
+import Keys from "../keys";
+import { DrawCanvas } from "../drawFunc";
+import updateBot from "../botLogic";
+import playerSprite from "../fighters/playerSprite";
+import botSprite from "../fighters/botSprite";
+import useKeyboardMouse from "./useKeyboardMouse";
 
-const useCanvas = (initialPlayer, initialEnemy) => {
+const useCanvas = () => {
   const ref = useRef(null);
-  const [player, setPlayer] = useState(initialPlayer);
-  const [enemy, setEnemy] = useState(initialEnemy);
-  console.log(player);
-  console.log(enemy);
+  console.log("playerSprite:", playerSprite);
+  console.log("botSprite:", botSprite);
+  const [player, setPlayer] = useState(() => playerSprite);
+  console.log("🚀 ~ file: useCanvas.jsx:12 ~ useCanvas ~ player:", player);
+  const [enemy, setEnemy] = useState(() => botSprite);
+  console.log("🚀 ~ file: useCanvas.jsx:14 ~ useCanvas ~ enemy:", enemy);
+
+  // Call useKeyboardMouse hook to handle keyboard/mouse events for player control
+  useKeyboardMouse(player);
 
   // this useEffect renders the drawing to the canvas
   useEffect(() => {

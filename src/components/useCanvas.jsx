@@ -1,11 +1,14 @@
-import { useRef, useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 import Keys from "./keys";
 import { DrawCanvas } from "./drawFunc";
 import updateBot from "./botLogic";
 
-const useCanvas = (player, enemy) => {
+const useCanvas = (initialPlayer, initialEnemy) => {
   const ref = useRef(null);
-
+  const [player, setPlayer] = useState(initialPlayer);
+  const [enemy, setEnemy] = useState(initialEnemy);
+  console.log(player);
+  console.log(enemy);
 
   // this useEffect renders the drawing to the canvas
   useEffect(() => {
@@ -33,8 +36,11 @@ const useCanvas = (player, enemy) => {
     const renderer = () => {
       DrawCanvas(context);
       animationId = window.requestAnimationFrame(renderer);
-      player.update(context);
-      enemy.update(context);
+
+      setPlayer(player.update(context));
+
+      setEnemy(enemy.update(context));
+
       // render the bot logic
       updateBot(enemy, player);
 
@@ -55,7 +61,11 @@ const useCanvas = (player, enemy) => {
         }) &&
         player.isAttacking
       ) {
-        console.log("hit");
+        setEnemy((prevEnemy) => ({
+          ...prevEnemy,
+          health: prevEnemy.health - 20,
+        }));
+        console.log("player_hit", "Enemy health:", enemy.health);
       }
 
       if (
@@ -65,7 +75,11 @@ const useCanvas = (player, enemy) => {
         }) &&
         enemy.isAttacking
       ) {
-        console.log("hit");
+        setPlayer((prevPlayer) => ({
+          ...prevPlayer,
+          health: prevPlayer.health - 20,
+        }));
+        console.log("enemy_hit", "Player health:", player.health);
       }
     };
     renderer();
@@ -76,7 +90,7 @@ const useCanvas = (player, enemy) => {
     };
   }, [player, enemy]);
 
-  return ref;
+  return [ref, player, enemy];
 };
 
 export default useCanvas;

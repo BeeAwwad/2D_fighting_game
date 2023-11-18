@@ -28,7 +28,7 @@ class Sprite {
   }
 
   update(ctx) {
-    console.log("Updating player");
+    // console.log("Updating player");
     DrawPlayer(ctx, this);
 
     // this part allow me to be able to reverse the attack box of the enemy using the sprite.attackBox.offset property
@@ -51,7 +51,7 @@ class Sprite {
         this.attackCooldown = false;
       }, 1000);
     }
-    console.log("Player updated:", this);
+    // console.log("Player updated:", this);
   }
 
   attack() {

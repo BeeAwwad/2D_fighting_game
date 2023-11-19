@@ -11,7 +11,7 @@ const GameCanvas = () => {
     <div className="relative inline-block">
       <GameBar player={player} enemy={enemy} />
       {/* Canvas for the game */}
-      <canvas ref={ref} width={gameWorld.width} height={gameWorld.height} />
+      <canvas ref={ref} width={gameWorld.canvasWidth} height={gameWorld.canvasHeight} />
     </div>
   );
 };

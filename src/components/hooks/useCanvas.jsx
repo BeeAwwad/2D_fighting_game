@@ -4,10 +4,11 @@ import { DrawCanvas } from "../drawFunc";
 import updateBot from "../botLogic";
 import useKeyboardMouse from "./useKeyboardMouse";
 import { FighterContext } from "../../context/FighterContext";
+import Sprite from "../sprite";
 
 const useCanvas = () => {
-const {player, setPlayer, enemy, setEnemy} = useContext(FighterContext)
-  console.log(player, enemy);
+  const { player, setPlayer, enemy, setEnemy } = useContext(FighterContext);
+
   const ref = useRef(null);
 
   // Call useKeyboardMouse hook to handle keyboard/mouse events for player control
@@ -19,42 +20,52 @@ const {player, setPlayer, enemy, setEnemy} = useContext(FighterContext)
     const context = canvas.getContext("2d");
     let animationId;
 
-    // // collision statements between attack box and body box
-    // const rectangularCollision = ({ rectangle1, rectangle2 }) => {
-    //   return (
-    //     rectangle1.position.x +
-    //       rectangle1.attackBox.width +
-    //       rectangle1.attackBox.offset.x >=
-    //       rectangle2.position.x &&
-    //     rectangle1.position.x + rectangle1.attackBox.offset.x <=
-    //       rectangle2.position.x + rectangle2.width &&
-    //     rectangle1.position.y + rectangle1.attackBox.height >=
-    //       rectangle2.position.y &&
-    //     rectangle1.attackBox.position.y <=
-    //       rectangle2.position.y + rectangle2.height
-    //   );
-    // };
+    // collision statements between attack box and body box
+    const rectangularCollision = ({ rectangle1, rectangle2 }) => {
+      return (
+        rectangle1.position.x +
+          rectangle1.attackBox.width +
+          rectangle1.attackBox.offset.x >=
+          rectangle2.position.x &&
+        rectangle1.position.x + rectangle1.attackBox.offset.x <=
+          rectangle2.position.x + rectangle2.width &&
+        rectangle1.position.y + rectangle1.attackBox.height >=
+          rectangle2.position.y &&
+        rectangle1.attackBox.position.y <=
+          rectangle2.position.y + rectangle2.height
+      );
+    };
 
     // renders the canvas, player and enemy
     const renderer = () => {
+      context.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
       DrawCanvas(context);
       animationId = window.requestAnimationFrame(renderer);
-
-      // setPlayer(player.update(context));
 
       // setEnemy(enemy.update(context));
 
       // // render the bot logic
       // updateBot(enemy, player);
 
-      // player.velocity.x = 0;
+      setPlayer((prevPlayer) => {
+        player.setContext(context);
+        const updatedPlayer = new Sprite({ ...prevPlayer });
 
-      // // move player left(a) or right(d)
-      // if (Keys.a.pressed && player.lastKey === "a") {
-      //   player.velocity.x = -5;
-      // } else if (Keys.d.pressed && player.lastKey === "d") {
-      //   player.velocity.x = 5;
-      // }
+        updatedPlayer.attackBox = { ...prevPlayer.attackBox };
+        updatedPlayer.update(context);
+        updatedPlayer.velocity.x = 0;
+
+        // move player left(a) or right(d)
+        if (Keys.a.pressed && updatedPlayer.lastKey === "a") {
+          updatedPlayer.velocity.x = -5;
+        } else if (Keys.d.pressed && updatedPlayer.lastKey === "d") {
+          updatedPlayer.velocity.x = 5;
+        }
+
+        // Other modifications to player can be done here...
+
+        return updatedPlayer;
+      });
 
       // // detect successful attack
       // if (
@@ -91,7 +102,7 @@ const {player, setPlayer, enemy, setEnemy} = useContext(FighterContext)
     return () => {
       window.cancelAnimationFrame(animationId);
     };
-  }, [player, enemy]);
+  }, []);
 
   return [ref];
 };

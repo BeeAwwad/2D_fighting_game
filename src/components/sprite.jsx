@@ -22,14 +22,24 @@ class Sprite {
       body: color.body,
       attack: color.attack,
     };
-    this.isAttacking;
+    this.isAttacking = false;
     this.attackCooldown = false; // Added property to track cooldown
     this.health = 100;
+    this.ctx = null;
+  }
+
+  setContext(ctx) {
+    this.ctx = ctx;
   }
 
   update(ctx) {
-    // console.log("Updating player");
-    DrawPlayer(ctx, this);
+   
+
+    if (this.ctx) {
+      console.log("drawing player....")
+      DrawPlayer(ctx, this);
+      console.log("player complete")
+    }
 
     // this part allow me to be able to reverse the attack box of the enemy using the sprite.attackBox.offset property
     this.attackBox.position.x = this.position.x + this.attackBox.offset.x;

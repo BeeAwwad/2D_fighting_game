@@ -28,25 +28,19 @@ class Sprite {
     this.ctx = null;
   }
 
+  // makes sure the context is set before updating or rendering
   setContext(ctx) {
     this.ctx = ctx;
   }
 
-  update(ctx) {
-    
-    if (this.ctx !== null) {
-      DrawPlayer(ctx, this);
-    } else {
-      console.log(this.ctx);
-    }
-
+  update() {
     // this part allow me to be able to reverse the attack box of the enemy using the sprite.attackBox.offset property
     this.attackBox.position.x = this.position.x + this.attackBox.offset.x;
     this.attackBox.position.y = this.position.y;
 
     // player movement logic
-    this.position.x += this.velocity.x;// this part makes the player move
-    this.position.y += this.velocity.y; // this part makes the player jump
+    this.position.x += this.velocity.x;
+    this.position.y += this.velocity.y;
 
     // gravity logic
     if (this.position.y + this.height + this.velocity.y >= this.canvasHeight) {
@@ -56,13 +50,19 @@ class Sprite {
     }
 
     // checks if attack is cooling down and prevents the player from attacking multiple times in a row
-
     if (this.attackCooldown) {
       setTimeout(() => {
         this.attackCooldown = false;
       }, 1000);
     }
-    // console.log("Player updated:", this);
+  }
+
+  render() {
+    if (this.ctx !== null) {
+      DrawPlayer(this.ctx, this);
+    } else {
+      console.log(this.ctx);
+    }
   }
 
   attack() {

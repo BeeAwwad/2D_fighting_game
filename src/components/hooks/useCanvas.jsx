@@ -48,9 +48,9 @@ const useCanvas = () => {
       // updateBot(enemy, player);
 
       setPlayer((prevPlayer) => {
-        player.setContext(context);
+      
         const updatedPlayer = new Sprite({ ...prevPlayer });
-
+        updatedPlayer.setContext(context);
         updatedPlayer.attackBox = { ...prevPlayer.attackBox };
         updatedPlayer.update(context);
         updatedPlayer.velocity.x = 0;

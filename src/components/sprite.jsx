@@ -33,25 +33,26 @@ class Sprite {
   }
 
   update(ctx) {
-   
-
-    if (this.ctx) {
-      console.log("drawing player....")
+    
+    if (this.ctx !== null) {
       DrawPlayer(ctx, this);
-      console.log("player complete")
+    } else {
+      console.log(this.ctx);
     }
 
     // this part allow me to be able to reverse the attack box of the enemy using the sprite.attackBox.offset property
     this.attackBox.position.x = this.position.x + this.attackBox.offset.x;
     this.attackBox.position.y = this.position.y;
 
-    this.position.x += this.velocity.x;
-    this.position.y += this.velocity.y;
+    // player movement logic
+    this.position.x += this.velocity.x;// this part makes the player move
+    this.position.y += this.velocity.y; // this part makes the player jump
 
+    // gravity logic
     if (this.position.y + this.height + this.velocity.y >= this.canvasHeight) {
-      this.velocity.y = 0;
+      this.velocity.y = 0; // this part prevents the player from falling through the ground
     } else {
-      this.velocity.y += this.gravity;
+      this.velocity.y += this.gravity; // while this part makes the player fall down
     }
 
     // checks if attack is cooling down and prevents the player from attacking multiple times in a row

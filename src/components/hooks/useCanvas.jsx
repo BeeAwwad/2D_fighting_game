@@ -1,44 +1,63 @@
-import { useRef, useEffect, useContext } from "react";
+import { useRef, useEffect, useContext, useMemo } from "react";
 import Keys from "../keys";
 import { DrawCanvas } from "../drawFunc";
-import updateBot from "../botLogic";
-import useKeyboardMouse from "./useKeyboardMouse";
+// import updateBot from "../botLogic";
+// import useKeyboardMouse from "./useKeyboardMouse";
 import { FighterContext } from "../../context/FighterContext";
 import Sprite from "../sprite";
 
 const useCanvas = () => {
   const { player, setPlayer, enemy, setEnemy } = useContext(FighterContext);
 
+  console.log(
+    "🚀 ~ file: useCanvas.jsx:14 ~ useCanvas ~ player:",
+    player.attackBox.offset
+  );
+
   const ref = useRef(null);
+  const updatedPlayer = useMemo(() => {
+    const { attackBox: {offset}, ...playerWithoutOffset } = player;
+    console.log("🚀 ~ file: useCanvas.jsx:20 ~ updatedPlayer ~ playerWithoutOffset:", playerWithoutOffset)
+    console.log("🚀 ~ file: useCanvas.jsx:20 ~ updatedPlayer ~ offset:", offset)
+    
+    return new Sprite({ offset, ...playerWithoutOffset });
+  }, [player]);
+
+  console.log(
+    "🚀 ~ file: useCanvas.jsx:14 ~ useCanvas ~ updatedPlayer:",
+    updatedPlayer
+  );
 
   const update = (ctx) => {
     // Update player logic
-    setPlayer((prevPlayer) => {
-      const updatedPlayer = new Sprite({ ...prevPlayer });
-      updatedPlayer.setContext(ctx); // Pass the context to Sprite
-      updatedPlayer.attackBox = { ...prevPlayer.attackBox };
-      updatedPlayer.update();
-      updatedPlayer.velocity.x = 0;
+    const updatedAttackBox = { ...updatedPlayer.attackBox };
+    console.log(
+      "🚀 ~ file: useCanvas.jsx:24 ~ update ~ updatedAttackBox:",
+      updatedAttackBox
+    );
 
-      // move player left(a) or right(d)
-      if (Keys.a.pressed && updatedPlayer.lastKey === "a") {
-        updatedPlayer.velocity.x = -5;
-      } else if (Keys.d.pressed && updatedPlayer.lastKey === "d") {
-        updatedPlayer.velocity.x = 5;
-      }
+    updatedPlayer.setContext(ctx); // Pass the context to Sprite
 
-      // Other modifications to player can be done here...
+    updatedPlayer.attackBox = updatedAttackBox;
+    updatedPlayer.update();
+    updatedPlayer.velocity.x = 0;
 
-      return updatedPlayer;
-    });
+    // move player left(a) or right(d)
+    if (Keys.a.pressed && updatedPlayer.lastKey === "a") {
+      updatedPlayer.velocity.x = -5;
+    } else if (Keys.d.pressed && updatedPlayer.lastKey === "d") {
+      updatedPlayer.velocity.x = 5;
+    }
+
+    // Other modifications to player can be done here...
+
+    setPlayer(updatedPlayer);
 
     // Additional update logic for enemy, collisions, etc.
     // updateBot(enemy, player);
   };
 
   const render = (ctx, cnv) => {
-
-
     ctx.clearRect(0, 0, cnv.width, cnv.height); // Clear the canvas
     DrawCanvas(ctx);
 
@@ -52,14 +71,14 @@ const useCanvas = () => {
   const gameLoop = (ctx, cnv) => {
     update(ctx);
     render(ctx, cnv);
-    requestAnimationFrame(gameLoop);
+    requestAnimationFrame(() => gameLoop(ctx, cnv));
   };
 
   // Call useKeyboardMouse hook to handle keyboard/mouse events for player control
   // useKeyboardMouse(player);
 
-   // collision statements between attack box and body box
-   const rectangularCollision = ({ rectangle1, rectangle2 }) => {
+  // collision statements between attack box and body box
+  const rectangularCollision = ({ rectangle1, rectangle2 }) => {
     return (
       rectangle1.position.x +
         rectangle1.attackBox.width +
@@ -76,7 +95,6 @@ const useCanvas = () => {
 
   // this useEffect renders the drawing to the canvas
   useEffect(() => {
-    
     const canvas = ref.current;
     if (canvas) {
       const context = canvas.getContext("2d");

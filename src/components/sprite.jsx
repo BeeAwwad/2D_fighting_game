@@ -14,7 +14,7 @@ class Sprite {
         x: this.position.x,
         y: this.position.y,
       },
-      offset,
+      offset: { x: offset.x, y: offset.y },
       width: 100,
       height: 50,
     };

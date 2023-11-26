@@ -9,35 +9,27 @@ import Sprite from "../sprite";
 const useCanvas = () => {
   const { player, setPlayer, enemy, setEnemy } = useContext(FighterContext);
 
-  console.log(
-    "🚀 ~ file: useCanvas.jsx:14 ~ useCanvas ~ player:",
-    player.attackBox.offset
-  );
-
   const ref = useRef(null);
   const updatedPlayer = useMemo(() => {
-    const { attackBox: {offset}, ...playerWithoutOffset } = player;
-    console.log("🚀 ~ file: useCanvas.jsx:20 ~ updatedPlayer ~ playerWithoutOffset:", playerWithoutOffset)
-    console.log("🚀 ~ file: useCanvas.jsx:20 ~ updatedPlayer ~ offset:", offset)
-    
-    return new Sprite({ offset, ...playerWithoutOffset });
+    const {
+      attackBox: { offset },
+      ctx,
+      ...playerWithoutOffset
+    } = player;
+      
+
+    return new Sprite({ ctx, offset, ...playerWithoutOffset });
   }, [player]);
 
-  console.log(
-    "🚀 ~ file: useCanvas.jsx:14 ~ useCanvas ~ updatedPlayer:",
-    updatedPlayer
-  );
+
 
   const update = (ctx) => {
     // Update player logic
     const updatedAttackBox = { ...updatedPlayer.attackBox };
-    console.log(
-      "🚀 ~ file: useCanvas.jsx:24 ~ update ~ updatedAttackBox:",
-      updatedAttackBox
-    );
 
-    updatedPlayer.setContext(ctx); // Pass the context to Sprite
+    // console.log(ctx);
 
+    updatedPlayer.setContext(ctx);
     updatedPlayer.attackBox = updatedAttackBox;
     updatedPlayer.update();
     updatedPlayer.velocity.x = 0;
@@ -98,8 +90,8 @@ const useCanvas = () => {
     const canvas = ref.current;
     if (canvas) {
       const context = canvas.getContext("2d");
-      console.log("Canvas:", canvas);
-      console.log("Context:", context);
+      // console.log("Canvas:", canvas);
+      // console.log("Context:", context);
 
       gameLoop(context, canvas); // Start the game loop when the component mounts
     }

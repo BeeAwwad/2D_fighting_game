@@ -30,8 +30,16 @@ class Sprite {
 
   // makes sure the context is set before updating or rendering
   setContext(ctx) {
+    if (ctx === null) {
+      throw new Error("Context cannot be null");
+    }
+    // console.log("Setting context to:", ctx);
     this.ctx = ctx;
+    // console.log("Sprite context is now:", this.ctx);
   }
+
+  
+
 
   update() {
     // this part allow me to be able to reverse the attack box of the enemy using the sprite.attackBox.offset property
@@ -58,11 +66,10 @@ class Sprite {
   }
 
   render() {
+    // console.log("Rendering with context:", this.ctx);
     if (this.ctx !== null) {
       DrawPlayer(this.ctx, this);
-    } else {
-      console.log(this.ctx);
-    }
+    } 
   }
 
   attack() {

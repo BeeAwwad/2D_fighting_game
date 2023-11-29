@@ -36,7 +36,6 @@ class Sprite {
     }
     // console.log("Setting context to:", ctx);
     this.ctx = ctx
-    console.log("Sprite context is now:", this.ctx)
   }
 
   update() {

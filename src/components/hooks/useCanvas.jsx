@@ -52,7 +52,7 @@ const useCanvas = () => {
 
     // Render player
     updatedPlayer.render()
-
+    setPlayer(updatedPlayer)
     // Render enemy, other game elements, etc.
     // enemy.render();
   }

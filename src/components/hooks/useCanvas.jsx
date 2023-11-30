@@ -45,10 +45,6 @@ const useCanvas = () => {
       updatedPlayer.velocity.x = 5
     }
 
-    console.log("Keys.a.pressed:", Keys.a.pressed)
-    console.log("Keys.d.pressed:", Keys.d.pressed)
-    console.log("updatedPlayer.lastKey:", updatedPlayer.lastKey)
-
     // Other modifications to player can be done here...
     setPlayer(updatedPlayer)
 

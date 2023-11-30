@@ -2,7 +2,7 @@ import { useRef, useEffect, useContext, useMemo } from "react"
 import Keys from "../keys"
 import { DrawCanvas } from "../drawFunc"
 // import updateBot from "../botLogic";
-// import useKeyboardMouse from "./useKeyboardMouse";
+import useKeyboardMouse from "./useKeyboardMouse"
 import { FighterContext } from "../../context/FighterContext"
 import Sprite from "../sprite"
 
@@ -14,17 +14,24 @@ const useCanvas = () => {
     const {
       attackBox: { offset },
       ctx,
+      lastKey,
       ...playerWithoutOffset
     } = player
+    console.log(
+      "🚀 ~ file: useCanvas.jsx:20 ~ updatedPlayer ~ lastKey:",
+      lastKey
+    )
 
-    return new Sprite({ ctx, offset, ...playerWithoutOffset })
+    return new Sprite({ ctx, offset, lastKey, ...playerWithoutOffset })
   }, [player])
+
+  console.log(updatedPlayer)
+
+  useKeyboardMouse(updatedPlayer)
 
   const update = (ctx) => {
     // Update player logic
     const updatedAttackBox = { ...updatedPlayer.attackBox }
-
-    // console.log(ctx);
 
     updatedPlayer.setContext(ctx)
     updatedPlayer.attackBox = updatedAttackBox
@@ -38,8 +45,11 @@ const useCanvas = () => {
       updatedPlayer.velocity.x = 5
     }
 
-    // Other modifications to player can be done here...
+    console.log("Keys.a.pressed:", Keys.a.pressed)
+    console.log("Keys.d.pressed:", Keys.d.pressed)
+    console.log("updatedPlayer.lastKey:", updatedPlayer.lastKey)
 
+    // Other modifications to player can be done here...
     setPlayer(updatedPlayer)
 
     // Additional update logic for enemy, collisions, etc.
@@ -62,9 +72,6 @@ const useCanvas = () => {
     render(ctx, cnv)
     requestAnimationFrame(() => gameLoop(ctx, cnv))
   }
-
-  // Call useKeyboardMouse hook to handle keyboard/mouse events for player control
-  // useKeyboardMouse(player);
 
   // collision statements between attack box and body box
   const rectangularCollision = ({ rectangle1, rectangle2 }) => {

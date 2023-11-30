@@ -9,7 +9,7 @@ class Sprite {
     this.width = 50
     this.canvasHeight = canvasHeight
     this.gravity = gravity
-    this.lastKey
+    this.lastKey = null
     this.attackBox = {
       position: {
         x: this.position.x,

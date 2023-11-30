@@ -10,6 +10,8 @@ const useCanvas = () => {
   const { player, setPlayer, enemy, setEnemy } = useContext(FighterContext)
 
   const ref = useRef(null)
+
+  // Player
   const updatedPlayer = useMemo(() => {
     const {
       attackBox: { offset },
@@ -17,25 +19,41 @@ const useCanvas = () => {
       lastKey,
       ...playerWithoutOffset
     } = player
-    console.log(
-      "🚀 ~ file: useCanvas.jsx:20 ~ updatedPlayer ~ lastKey:",
-      lastKey
-    )
 
     return new Sprite({ ctx, offset, lastKey, ...playerWithoutOffset })
   }, [player])
-
-  console.log(updatedPlayer)
+  // console.log(
+  //   "🚀 ~ file: useCanvas.jsx:29 ~ updatedPlayer ~ updatedPlayer:",
+  //   updatedPlayer
+  // )
 
   useKeyboardMouse(updatedPlayer)
+
+  // Enemy
+  const updatedEnemy = useMemo(() => {
+    const {
+      attackBox: { offset },
+      ctx,
+      lastKey,
+      ...enemyrWithoutOffset
+    } = enemy
+
+    return new Sprite({ ctx, offset, lastKey, ...enemyrWithoutOffset })
+  }, [enemy])
+  console.log(
+    "🚀 ~ file: useCanvas.jsx:38 ~ updatedEnemy ~ updatedEnemy:",
+    updatedEnemy
+  )
 
   const update = (ctx) => {
     // Update player logic
     const updatedAttackBox = { ...updatedPlayer.attackBox }
 
     updatedPlayer.setContext(ctx)
+    updatedEnemy.setContext(ctx)
     updatedPlayer.attackBox = updatedAttackBox
     updatedPlayer.update()
+    updatedEnemy.update()
     updatedPlayer.velocity.x = 0
 
     // move player left(a) or right(d)
@@ -58,7 +76,9 @@ const useCanvas = () => {
 
     // Render player
     updatedPlayer.render()
+    updatedEnemy.render()
     setPlayer(updatedPlayer)
+    setEnemy(updatedEnemy)
     // Render enemy, other game elements, etc.
     // enemy.render();
   }

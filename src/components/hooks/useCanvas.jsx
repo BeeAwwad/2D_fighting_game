@@ -90,23 +90,16 @@ const useCanvas = () => {
     ) {
       console.log("Jab!")
 
-      // Subtract health from updatedEnemy
-      updatedEnemy.health -= 20
-      console.log(
-        "🚀 ~ file: useCanvas.jsx:83 ~ update ~ updatedEnemy.health:",
-        updatedEnemy.health
-      )
+      setEnemy((prevEnemy) => {
+        let updatedEnemyWithReducedHealth = {
+          ...prevEnemy,
+          health: prevEnemy.health - 10 > 0 ? prevEnemy.health - 10 : 0,
+        }
+        console.log(updatedEnemyWithReducedHealth.health)
+        return updatedEnemyWithReducedHealth
+      })
+    }
 
-      // Ensure health doesn't go below 0
-      if (updatedEnemy.health <= 0) {
-        updatedEnemy.health = 0
-      }
-    }
-    const updatedEnemyWithNewHealth = {
-      ...updatedEnemy,
-      health: updatedEnemy.health - 1,
-    }
-    setEnemy(updatedEnemyWithNewHealth)
     if (
       rectangularCollision({
         rectangle1: updatedEnemy,
@@ -147,7 +140,7 @@ const useCanvas = () => {
 
       gameLoop(context, canvas)
     }
-  }, [])
+  }, [updatedEnemy.health])
 
   return [ref, updatedPlayer, updatedEnemy]
 }

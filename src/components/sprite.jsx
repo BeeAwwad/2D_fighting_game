@@ -54,12 +54,7 @@ class Sprite {
       this.velocity.y += this.gravity // while this part makes the player fall down
     }
 
-    // checks if attack is cooling down and prevents the player from attacking multiple times in a row
-    if (this.attackCooldown) {
-      setTimeout(() => {
-        this.attackCooldown = false
-      }, 1000)
-    }
+    // attack cooldown logic
   }
 
   render() {
@@ -70,9 +65,8 @@ class Sprite {
   }
 
   attack() {
-    if (!this.isAttacking && !this.attackCooldown) {
+    if (!this.isAttacking) {
       this.isAttacking = true
-      this.attackCooldown = true
       setTimeout(() => {
         this.isAttacking = false
       }, 100)

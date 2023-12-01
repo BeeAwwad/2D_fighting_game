@@ -6,14 +6,14 @@ function HealthBar({ fighter }) {
   function calculateHealthBar(health) {
     return Math.floor(health / 10) * 10
   }
-
+  console.log(fighter.health)
   // Update health bar when fighter health changes
   useEffect(() => {
-    console.log("Health updated:", fighter.health)
     setFighterHealth(fighter.health)
   }, [fighter.health])
 
   let healthBar = calculateHealthBar(fighterHealth)
+  console.log("🚀 ~ file: HealthBar.jsx:17 ~ HealthBar ~ healthBar:", healthBar)
 
   return (
     <div className="relative h-8 w-full">
@@ -22,7 +22,7 @@ function HealthBar({ fighter }) {
         className={`absolute bg-red-600 top-0 right-0 bottom-0 left-0`}
         style={{ width: `${healthBar}%` }}
       >
-        {healthBar}
+        {fighterHealth}
       </div>
     </div>
   )

@@ -40,10 +40,22 @@ const useCanvas = () => {
 
     return new Sprite({ ctx, offset, lastKey, ...enemyrWithoutOffset })
   }, [enemy])
-  console.log(
-    "🚀 ~ file: useCanvas.jsx:38 ~ updatedEnemy ~ updatedEnemy:",
-    updatedEnemy
-  )
+
+  // collision statements between attack box and body box
+  const rectangularCollision = ({ rectangle1, rectangle2 }) => {
+    return (
+      rectangle1.position.x +
+        rectangle1.attackBox.width +
+        rectangle1.attackBox.offset.x >=
+        rectangle2.position.x &&
+      rectangle1.position.x + rectangle1.attackBox.offset.x <=
+        rectangle2.position.x + rectangle2.width &&
+      rectangle1.position.y + rectangle1.attackBox.height >=
+        rectangle2.position.y &&
+      rectangle1.attackBox.position.y <=
+        rectangle2.position.y + rectangle2.height
+    )
+  }
 
   const update = (ctx) => {
     // Update player logic
@@ -79,7 +91,7 @@ const useCanvas = () => {
       console.log("Jab!")
 
       // Subtract health from updatedEnemy
-      updatedEnemy.health -= 10
+      updatedEnemy.health -= 20
       console.log(
         "🚀 ~ file: useCanvas.jsx:83 ~ update ~ updatedEnemy.health:",
         updatedEnemy.health
@@ -90,7 +102,11 @@ const useCanvas = () => {
         updatedEnemy.health = 0
       }
     }
-    setEnemy(updatedEnemy)
+    const updatedEnemyWithNewHealth = {
+      ...updatedEnemy,
+      health: updatedEnemy.health - 1,
+    }
+    setEnemy(updatedEnemyWithNewHealth)
     if (
       rectangularCollision({
         rectangle1: updatedEnemy,
@@ -121,22 +137,6 @@ const useCanvas = () => {
     update(ctx)
     render(ctx, cnv)
     requestAnimationFrame(() => gameLoop(ctx, cnv))
-  }
-
-  // collision statements between attack box and body box
-  const rectangularCollision = ({ rectangle1, rectangle2 }) => {
-    return (
-      rectangle1.position.x +
-        rectangle1.attackBox.width +
-        rectangle1.attackBox.offset.x >=
-        rectangle2.position.x &&
-      rectangle1.position.x + rectangle1.attackBox.offset.x <=
-        rectangle2.position.x + rectangle2.width &&
-      rectangle1.position.y + rectangle1.attackBox.height >=
-        rectangle2.position.y &&
-      rectangle1.attackBox.position.y <=
-        rectangle2.position.y + rectangle2.height
-    )
   }
 
   // this useEffect renders the drawing to the canvas

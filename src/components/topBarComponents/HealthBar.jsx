@@ -1,30 +1,19 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react"
 
 function HealthBar({ fighter }) {
-    
-  // Calculate health bar based on fighter health
+  const [fighterHealth, setFighterHealth] = useState(0)
+
   function calculateHealthBar(health) {
-    if (health === 100) {
-      return 100;
-    } else if (health === 80) {
-      return 80;
-    } else if (health === 60) {
-      return 60;
-    } else if (health === 40) {
-      return 40;
-    } else if (health === 20) {
-      return 20;
-    } else {
-      return 0;
-    }
+    return Math.floor(health / 10) * 10
   }
 
   // Update health bar when fighter health changes
   useEffect(() => {
-    console.log("Health updated:", fighter.health);
-  }, [fighter.health]);
+    console.log("Health updated:", fighter.health)
+    setFighterHealth(fighter.health)
+  }, [fighter.health])
 
-  const healthBar = calculateHealthBar(fighter.health);
+  let healthBar = calculateHealthBar(fighterHealth)
 
   return (
     <div className="relative h-8 w-full">
@@ -36,7 +25,7 @@ function HealthBar({ fighter }) {
         {healthBar}
       </div>
     </div>
-  );
+  )
 }
 
-export default HealthBar;
+export default HealthBar

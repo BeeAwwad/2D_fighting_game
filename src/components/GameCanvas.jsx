@@ -1,19 +1,20 @@
-import useCanvas from "./hooks/useCanvas";
-import GameBar from "./topBarComponents/GameBar";
-import gameWorld from "./gameWorld";
-import { useContext } from "react";
-import { FighterContext } from "../context/FighterContext";
+import useCanvas from "./hooks/useCanvas"
+import GameBar from "./topBarComponents/GameBar"
+import gameWorld from "./gameWorld"
 
 const GameCanvas = () => {
-  const { player, setPlayer, enemy, setEnemy } = useContext(FighterContext);
-  const [ref] = useCanvas(player, setPlayer, enemy, setEnemy);
+  const [ref, updatedPlayer, updatedEnemy] = useCanvas()
   return (
     <div className="relative inline-block">
-      <GameBar player={player} enemy={enemy} />
+      <GameBar player={updatedPlayer} enemy={updatedEnemy} />
       {/* Canvas for the game */}
-      <canvas ref={ref} width={gameWorld.canvasWidth} height={gameWorld.canvasHeight} />
+      <canvas
+        ref={ref}
+        width={gameWorld.canvasWidth}
+        height={gameWorld.canvasHeight}
+      />
     </div>
-  );
-};
+  )
+}
 
-export default GameCanvas;
+export default GameCanvas

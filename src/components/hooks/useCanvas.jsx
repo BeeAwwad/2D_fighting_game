@@ -67,6 +67,40 @@ const useCanvas = () => {
     setPlayer(updatedPlayer)
 
     // Additional update logic for enemy, collisions, etc.
+
+    // detect successful attack
+    if (
+      rectangularCollision({
+        rectangle1: updatedPlayer,
+        rectangle2: updatedEnemy,
+      }) &&
+      updatedPlayer.isAttacking
+    ) {
+      console.log("Jab!")
+
+      // Subtract health from updatedEnemy
+      updatedEnemy.health -= 10
+      console.log(
+        "🚀 ~ file: useCanvas.jsx:83 ~ update ~ updatedEnemy.health:",
+        updatedEnemy.health
+      )
+
+      // Ensure health doesn't go below 0
+      if (updatedEnemy.health <= 0) {
+        updatedEnemy.health = 0
+      }
+    }
+    setEnemy(updatedEnemy)
+    if (
+      rectangularCollision({
+        rectangle1: updatedEnemy,
+        rectangle2: updatedPlayer,
+      }) &&
+      updatedEnemy.isAttacking
+    ) {
+      console.log("I have been hit!")
+    }
+
     // updateBot(enemy, player);
   }
 
@@ -115,7 +149,7 @@ const useCanvas = () => {
     }
   }, [])
 
-  return [ref]
+  return [ref, updatedPlayer, updatedEnemy]
 }
 
 export default useCanvas

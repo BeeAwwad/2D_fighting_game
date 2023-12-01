@@ -9,11 +9,11 @@ function HealthBar({ fighter }) {
   console.log(fighter.health)
   // Update health bar when fighter health changes
   useEffect(() => {
+    console.log("Health updated:", fighterHealth)
     setFighterHealth(fighter.health)
   }, [fighter.health])
 
   let healthBar = calculateHealthBar(fighterHealth)
-  console.log("🚀 ~ file: HealthBar.jsx:17 ~ HealthBar ~ healthBar:", healthBar)
 
   return (
     <div className="relative h-8 w-full">

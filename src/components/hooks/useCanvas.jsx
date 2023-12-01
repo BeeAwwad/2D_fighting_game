@@ -90,24 +90,16 @@ const useCanvas = () => {
     ) {
       console.log("Jab!")
 
-      let updatedEnemyWithReducedHealth = {
-        ...updatedEnemy,
-        health: Math.max(updatedEnemy.health - 10, 0),
-      }
-      console.log("Enemy health is ", updatedEnemyWithReducedHealth.health)
-      setEnemy(updatedEnemyWithReducedHealth)
-    }
+      // Reduce enemy health by 10
+      updatedEnemy.health = Math.max(updatedEnemy.health - 10, 0)
+      console.log(
+        "🚀 ~ file: useCanvas.jsx:95 ~ update ~ updatedEnemy.health:",
+        updatedEnemy.health
+      )
 
-    if (
-      rectangularCollision({
-        rectangle1: updatedEnemy,
-        rectangle2: updatedPlayer,
-      }) &&
-      updatedEnemy.isAttacking
-    ) {
-      console.log("I have been hit!")
+      // Update the enemy directly in the state
+      setEnemy(updatedEnemy)
     }
-
     // updateBot(enemy, player);
   }
 

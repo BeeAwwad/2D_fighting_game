@@ -70,9 +70,9 @@ const useCanvas = () => {
 
     // move player left(a) or right(d)
     if (Keys.a.pressed && updatedPlayer.lastKey === "a") {
-      updatedPlayer.velocity.x = -5
+      updatedPlayer.velocity.x = -4
     } else if (Keys.d.pressed && updatedPlayer.lastKey === "d") {
-      updatedPlayer.velocity.x = 5
+      updatedPlayer.velocity.x = 4
     }
 
     // Other modifications to player can be done here...
@@ -90,14 +90,12 @@ const useCanvas = () => {
     ) {
       console.log("Jab!")
 
-      setEnemy((prevEnemy) => {
-        let updatedEnemyWithReducedHealth = {
-          ...prevEnemy,
-          health: prevEnemy.health - 10 > 0 ? prevEnemy.health - 10 : 0,
-        }
-        console.log(updatedEnemyWithReducedHealth.health)
-        return updatedEnemyWithReducedHealth
-      })
+      let updatedEnemyWithReducedHealth = {
+        ...updatedEnemy,
+        health: Math.max(updatedEnemy.health - 10, 0),
+      }
+      console.log("Enemy health is ", updatedEnemyWithReducedHealth.health)
+      setEnemy(updatedEnemyWithReducedHealth)
     }
 
     if (
@@ -140,7 +138,7 @@ const useCanvas = () => {
 
       gameLoop(context, canvas)
     }
-  }, [updatedEnemy.health])
+  }, [])
 
   return [ref, updatedPlayer, updatedEnemy]
 }

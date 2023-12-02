@@ -1,19 +1,26 @@
 import { useEffect, useState } from "react"
 
 function HealthBar({ fighter }) {
-  const [fighterHealth, setFighterHealth] = useState(0)
+  console.log(fighter)
+  const [fighterHealth, setFighterHealth] = useState(fighter.health)
+  const [healthBar, setHealthBar] = useState(calculateHealthBar(fighter.health))
 
   function calculateHealthBar(health) {
     return Math.floor(health / 10) * 10
   }
-  console.log(fighter.health)
-  // Update health bar when fighter health changes
+
   useEffect(() => {
-    console.log("Health updated:", fighterHealth)
-    setFighterHealth(fighter.health)
+    setFighterHealth((prevHealth) => {
+      if (prevHealth !== fighter.health) {
+        return fighter.health
+      }
+      return prevHealth
+    })
   }, [fighter.health])
 
-  let healthBar = calculateHealthBar(fighterHealth)
+  useEffect(() => {
+    setHealthBar(calculateHealthBar(fighterHealth))
+  }, [fighterHealth])
 
   return (
     <div className="relative h-8 w-full">

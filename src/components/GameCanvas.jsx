@@ -4,6 +4,7 @@ import gameWorld from "./gameWorld"
 
 const GameCanvas = () => {
   const [ref, updatedPlayer, updatedEnemy] = useCanvas()
+
   return (
     <div className="relative inline-block">
       <GameBar player={updatedPlayer} enemy={updatedEnemy} />

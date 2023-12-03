@@ -1,9 +1,9 @@
-import HealthBar from "./HealthBar";
-import Timer from "./Timer";
+import HealthBar from "./HealthBar"
+import Timer from "./Timer"
+import PropTypes from "prop-types"
 
 function GameBar(props) {
-  const { player, enemy } = props;
-
+  const { player, enemy } = props
 
   return (
     <div className="absolute flex w-full items-center p-4">
@@ -11,7 +11,12 @@ function GameBar(props) {
       <Timer />
       <HealthBar fighter={enemy} />
     </div>
-  );
+  )
 }
 
-export default GameBar;
+GameBar.propTypes = {
+  player: PropTypes.object.isRequired,
+  enemy: PropTypes.object.isRequired,
+}
+
+export default GameBar

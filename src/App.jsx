@@ -1,16 +1,20 @@
 import GameCanvas from "./components/GameCanvas"
-import { useState } from "react"
 import playerSprite from "./components/fighters/playerSprite"
 import botSprite from "./components/fighters/botSprite"
 import { FighterContext } from "./context/FighterContext"
+import cloneDeep from "lodash.clonedeep"
 
 function App() {
-  const [player, setPlayer] = useState(() => playerSprite)
-  const [enemy, setEnemy] = useState(() => botSprite)
+  console.log("🚀 ~ file: App.jsx:9 ~ App ~ playerSprite:", playerSprite)
+  const player = cloneDeep(playerSprite)
+  console.log("🚀 ~ file: App.jsx:9 ~ App ~ player:", player)
+  const enemy = cloneDeep(botSprite)
+
+  console.log(player === playerSprite)
 
   return (
     <div className="relative inline-block">
-      <FighterContext.Provider value={{ player, setPlayer, enemy, setEnemy }}>
+      <FighterContext.Provider value={{ player, enemy }}>
         <GameCanvas />
       </FighterContext.Provider>
     </div>

@@ -1,5 +1,5 @@
 import { DrawPlayer } from "./drawFunc"
-import { checkObject } from "./hooks/checkObject"
+import { checkObject } from "./functions/checkObject"
 // class for making new players
 class Sprite {
   constructor({ position, velocity, canvasHeight, gravity, color, offset }) {

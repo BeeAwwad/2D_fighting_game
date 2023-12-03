@@ -1,3 +1,5 @@
+import PropTypes from "prop-types"
+
 function HealthBar({ fighter }) {
   const fighterHealth = fighter.health
   const healthBar = calculateHealthBar(fighterHealth)
@@ -17,6 +19,11 @@ function HealthBar({ fighter }) {
       </div>
     </div>
   )
+}
+
+HealthBar.propTypes = {
+  fighter: PropTypes.object,
+  fighterHealth: PropTypes.number,
 }
 
 export default HealthBar

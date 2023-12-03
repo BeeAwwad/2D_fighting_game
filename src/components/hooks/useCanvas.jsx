@@ -1,4 +1,4 @@
-import { useRef, useEffect, useContext, useMemo } from "react"
+import { useRef, useEffect, useContext, useMemo, useState } from "react"
 import Keys from "../keys"
 import { DrawCanvas } from "../drawFunc"
 // import updateBot from "../botLogic";
@@ -7,7 +7,9 @@ import { FighterContext } from "../../context/FighterContext"
 import Sprite from "../sprite"
 
 const useCanvas = () => {
-  const { player, setPlayer, enemy, setEnemy } = useContext(FighterContext)
+  const { player, enemy } = useContext(FighterContext)
+  const [currentPlayer, setCurrentPlayer] = useState(player)
+  const [currentEnemy, setCurrentEnemy] = useState(enemy)
 
   const ref = useRef(null)
 
@@ -18,14 +20,10 @@ const useCanvas = () => {
       ctx,
       lastKey,
       ...playerWithoutOffset
-    } = player
+    } = currentPlayer
 
     return new Sprite({ ctx, offset, lastKey, ...playerWithoutOffset })
-  }, [player])
-  // console.log(
-  //   "🚀 ~ file: useCanvas.jsx:29 ~ updatedPlayer ~ updatedPlayer:",
-  //   updatedPlayer
-  // )
+  }, [currentPlayer])
 
   useKeyboardMouse(updatedPlayer)
 
@@ -76,7 +74,7 @@ const useCanvas = () => {
     }
 
     // Other modifications to player can be done here...
-    setPlayer(updatedPlayer)
+    setCurrentPlayer(updatedPlayer)
 
     // Additional update logic for enemy, collisions, etc.
 
@@ -98,7 +96,7 @@ const useCanvas = () => {
       )
 
       // Update the enemy directly in the state
-      setEnemy(updatedEnemy)
+      setCurrentEnemy(updatedEnemy)
     }
     // updateBot(enemy, player);
   }
@@ -110,8 +108,8 @@ const useCanvas = () => {
     // Render player
     updatedPlayer.render()
     updatedEnemy.render()
-    setPlayer(updatedPlayer)
-    setEnemy(updatedEnemy)
+    setCurrentPlayer(updatedPlayer)
+    setCurrentEnemy(updatedEnemy)
     // Render enemy, other game elements, etc.
     // enemy.render();
   }
@@ -130,7 +128,7 @@ const useCanvas = () => {
 
       gameLoop(context, canvas)
     }
-  }, [])
+  }, [updatedPlayer, updatedEnemy])
 
   return [ref, updatedPlayer, updatedEnemy]
 }

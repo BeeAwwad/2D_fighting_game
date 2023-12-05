@@ -1,7 +1,6 @@
 import GameCanvas from "./components/GameCanvas"
 import playerSprite from "./components/fighters/playerSprite"
 import botSprite from "./components/fighters/botSprite"
-import { FighterContext } from "./context/FighterContext"
 import cloneDeep from "lodash.clonedeep"
 
 function App() {
@@ -10,9 +9,7 @@ function App() {
 
   return (
     <div className="relative inline-block">
-      <FighterContext.Provider value={{ player, enemy }}>
-        <GameCanvas />
-      </FighterContext.Provider>
+      <GameCanvas player={player} enemy={enemy} />
     </div>
   )
 }

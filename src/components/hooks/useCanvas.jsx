@@ -1,13 +1,11 @@
-import { useRef, useEffect, useContext, useMemo, useState } from "react"
+import { useRef, useEffect, useMemo, useState } from "react"
 import Keys from "../keys"
 import { DrawCanvas } from "../drawFunc"
 // import updateBot from "../botLogic";
 import useKeyboardMouse from "./useKeyboardMouse"
-import { FighterContext } from "../../context/FighterContext"
 import Sprite from "../sprite"
 
-const useCanvas = () => {
-  const { player, enemy } = useContext(FighterContext)
+const useCanvas = ({ player, enemy }) => {
   const [currentPlayer, setCurrentPlayer] = useState(player)
   const [currentEnemy, setCurrentEnemy] = useState(enemy)
 
@@ -34,10 +32,10 @@ const useCanvas = () => {
       ctx,
       lastKey,
       ...enemyrWithoutOffset
-    } = enemy
+    } = currentEnemy
 
     return new Sprite({ ctx, offset, lastKey, ...enemyrWithoutOffset })
-  }, [enemy])
+  }, [currentEnemy])
 
   // collision statements between attack box and body box
   const rectangularCollision = ({ rectangle1, rectangle2 }) => {
@@ -86,17 +84,12 @@ const useCanvas = () => {
       }) &&
       updatedPlayer.isAttacking
     ) {
-      console.log("Jab!")
-
-      // Reduce enemy health by 10
-      updatedEnemy.health = Math.max(updatedEnemy.health - 10, 0)
-      console.log(
-        "🚀 ~ file: useCanvas.jsx:95 ~ update ~ updatedEnemy.health:",
-        updatedEnemy.health
-      )
-
-      // Update the enemy directly in the state
-      setCurrentEnemy(updatedEnemy)
+      const newEnemy = {
+        ...updatedEnemy,
+        health: Math.max(updatedEnemy.health - 10, 0),
+      }
+      console.log("Enemy health:", newEnemy.health)
+      setCurrentEnemy(newEnemy)
     }
     // updateBot(enemy, player);
   }
@@ -128,9 +121,9 @@ const useCanvas = () => {
 
       gameLoop(context, canvas)
     }
-  }, [updatedPlayer, updatedEnemy])
+  }, [updatedEnemy.health])
 
-  return [ref, updatedPlayer, updatedEnemy]
+  return [ref, currentPlayer, currentEnemy]
 }
 
 export default useCanvas

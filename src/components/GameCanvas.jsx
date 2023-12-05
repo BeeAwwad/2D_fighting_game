@@ -1,9 +1,10 @@
 import useCanvas from "./hooks/useCanvas"
 import GameBar from "./topBarComponents/GameBar"
 import gameWorld from "./gameWorld"
+import PropTypes from "prop-types"
 
-const GameCanvas = () => {
-  const [ref, currentPlayer, currentEnemy] = useCanvas()
+const GameCanvas = ({ player, enemy }) => {
+  const [ref, currentPlayer, currentEnemy] = useCanvas({ player, enemy })
 
   return (
     <div className="relative inline-block">
@@ -16,6 +17,11 @@ const GameCanvas = () => {
       />
     </div>
   )
+}
+
+GameCanvas.propTypes = {
+  player: PropTypes.object.isRequired,
+  enemy: PropTypes.object.isRequired,
 }
 
 export default GameCanvas

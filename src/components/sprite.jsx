@@ -1,4 +1,4 @@
-import { DrawPlayer } from "./drawFunc"
+import { DrawPlayer } from "./functions/drawFunc"
 import { checkObject } from "./functions/checkObject"
 // class for making new players
 class Sprite {

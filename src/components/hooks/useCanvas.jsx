@@ -1,6 +1,6 @@
 import { useRef, useEffect, useMemo, useState } from "react"
 import Keys from "../keys"
-import { DrawCanvas } from "../drawFunc"
+import { DrawCanvas } from "../functions/drawFunc"
 // import updateBot from "../botLogic";
 import useKeyboardMouse from "./useKeyboardMouse"
 import Sprite from "../sprite"

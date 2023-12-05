@@ -1,45 +1,44 @@
 import { DrawPlayer } from "./functions/drawFunc"
 import { checkObject } from "./functions/checkObject"
-// class for making new players
-class Sprite {
-  constructor({ position, velocity, canvasHeight, gravity, color, offset }) {
-    this.position = position
-    this.velocity = velocity
-    this.height = 150
-    this.width = 50
-    this.canvasHeight = canvasHeight
-    this.gravity = gravity
-    this.lastKey = null
-    this.attackBox = {
-      position: {
-        x: this.position.x,
-        y: this.position.y,
-      },
-      offset: { x: offset.x, y: offset.y },
-      width: 100,
-      height: 50,
-    }
-    this.color = {
-      body: color.body,
-      attack: color.attack,
-    }
-    this.isAttacking = false
-    this.attackCooldown = false // Added property to track cooldown
-    this.health = 100
-    this.ctx = null
+import gameWorld from "./gameWorld"
+
+// Constructor function for making new players
+function Sprite({ position, velocity, color, offset }) {
+  this.position = position
+  this.velocity = velocity
+  this.height = 150
+  this.width = 50
+  this.canvasHeight = gameWorld.canvasHeight
+  this.gravity = gameWorld.gravity
+  this.lastKey = null
+  this.attackBox = {
+    position: {
+      x: this.position.x,
+      y: this.position.y,
+    },
+    offset: { x: offset.x, y: offset.y },
+    width: 100,
+    height: 50,
   }
+  this.color = {
+    body: color.body,
+    attack: color.attack,
+  }
+  this.isAttacking = false
+  this.attackCooldown = false // Added property to track cooldown
+  this.health = 100
+  this.ctx = null
 
   // makes sure the context is set before updating or rendering
-  setContext(ctx) {
+  this.setContext = function (ctx) {
     if (ctx == null) {
       throw new Error("Context cannot be null")
     }
-    // console.log("Setting context to:", ctx);
     this.ctx = ctx
   }
 
-  update() {
-    // this part allow me to be able to reverse the attack box of the enemy using the sprite.attackBox.offset property
+  this.update = function () {
+    // this part allows me to reverse the attack box of the enemy using the sprite.attackBox.offset property
     this.attackBox.position.x = this.position.x + this.attackBox.offset.x
     this.attackBox.position.y = this.position.y
 
@@ -57,14 +56,14 @@ class Sprite {
     // attack cooldown logic
   }
 
-  render() {
+  this.render = function () {
     // console.log("Rendering with context:", this.ctx);
     if (checkObject(this.ctx)) {
       DrawPlayer(this.ctx, this)
     }
   }
 
-  attack() {
+  this.attack = function () {
     if (!this.isAttacking) {
       this.isAttacking = true
       setTimeout(() => {

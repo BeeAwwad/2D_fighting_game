@@ -1,5 +1,4 @@
-import Sprite from "../sprite";
-import gameWorld from "../gameWorld";
+import Sprite from "../sprite"
 
 // Player Sprite
 const playerSprite = new Sprite({
@@ -15,12 +14,11 @@ const playerSprite = new Sprite({
     x: 0,
     y: 0,
   },
-  canvasHeight: gameWorld.canvasHeight,
-  gravity: gameWorld.gravity,
+
   color: {
     body: "#DF1F2D",
     attack: "#2B3784",
   },
-});
+})
 
-export default playerSprite;
+export default playerSprite

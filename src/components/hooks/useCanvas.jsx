@@ -1,7 +1,7 @@
 import { useRef, useEffect, useMemo, useState } from "react"
 import Keys from "../keys"
 import { DrawCanvas } from "../functions/drawFunc"
-// import updateBot from "../botLogic";
+import updateBot from "../botLogic"
 import useKeyboardMouse from "./useKeyboardMouse"
 import Sprite from "../sprite"
 
@@ -74,6 +74,9 @@ const useCanvas = ({ player, enemy }) => {
     // Other modifications to player can be done here...
     setCurrentPlayer(updatedPlayer)
 
+    // Bot behavioirs
+    updateBot(updatedEnemy, updatedPlayer)
+
     // Additional update logic for enemy, collisions, etc.
 
     // detect successful attack
@@ -84,13 +87,23 @@ const useCanvas = ({ player, enemy }) => {
       }) &&
       updatedPlayer.isAttacking
     ) {
-      const newEnemy = {
-        ...updatedEnemy,
-        health: Math.max(updatedEnemy.health - 10, 0),
-      }
-      console.log("Enemy health:", newEnemy.health)
-      setCurrentEnemy(newEnemy)
+      updatedEnemy.health = Math.max(updatedEnemy.health - 10, 0)
+      console.log("Enemy health:", updatedEnemy.health)
+      setCurrentEnemy(updatedEnemy)
     }
+    // detect successful enemy attack
+    if (
+      rectangularCollision({
+        rectangle1: updatedEnemy,
+        rectangle2: updatedPlayer,
+      }) &&
+      updatedEnemy.isAttacking
+    ) {
+      updatedPlayer.health = Math.max(updatedPlayer.health - 10, 0)
+      console.log("Enemy health:", updatedPlayer.health)
+      setCurrentEnemy(updatedPlayer)
+    }
+
     // updateBot(enemy, player);
   }
 

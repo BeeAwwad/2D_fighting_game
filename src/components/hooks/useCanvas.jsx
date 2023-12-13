@@ -4,8 +4,13 @@ import { DrawCanvas } from "../functions/drawFunc"
 import updateBot from "../botLogic"
 import useKeyboardMouse from "./useKeyboardMouse"
 import Sprite from "../sprite"
+import cloneDeep from "lodash.clonedeep"
+import playerSprite from "../fighters/playerSprite"
+import botSprite from "../fighters/botSprite"
 
-const useCanvas = ({ player, enemy }) => {
+const useCanvas = () => {
+  const player = cloneDeep(playerSprite)
+  const enemy = cloneDeep(botSprite)
   const [currentPlayer, setCurrentPlayer] = useState(player)
   const [currentEnemy, setCurrentEnemy] = useState(enemy)
 
@@ -100,11 +105,9 @@ const useCanvas = ({ player, enemy }) => {
       updatedEnemy.isAttacking
     ) {
       updatedPlayer.health = Math.max(updatedPlayer.health - 10, 0)
-      console.log("Enemy health:", updatedPlayer.health)
+      console.log("Player health:", updatedPlayer.health)
       setCurrentEnemy(updatedPlayer)
     }
-
-    // updateBot(enemy, player);
   }
 
   const render = (ctx, cnv) => {
@@ -134,7 +137,7 @@ const useCanvas = ({ player, enemy }) => {
 
       gameLoop(context, canvas)
     }
-  }, [updatedEnemy.health])
+  }, [])
 
   return [ref, currentPlayer, currentEnemy]
 }

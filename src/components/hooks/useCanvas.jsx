@@ -144,7 +144,7 @@ const useCanvas = () => {
     }
   }, [])
 
-  return [ref, currentPlayer, currentEnemy]
+  return [ref, currentPlayer, currentEnemy, playerHealth, enemyHealth]
 }
 
 export default useCanvas

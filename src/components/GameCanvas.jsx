@@ -1,7 +1,6 @@
 import useCanvas from "./hooks/useCanvas"
 import GameBar from "./topBarComponents/GameBar"
 import gameWorld from "./gameWorld"
-import PropTypes from "prop-types"
 
 const GameCanvas = () => {
   const [ref, currentPlayer, currentEnemy] = useCanvas()

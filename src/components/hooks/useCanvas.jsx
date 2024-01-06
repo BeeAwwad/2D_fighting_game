@@ -13,6 +13,8 @@ const useCanvas = () => {
   const enemy = cloneDeep(botSprite)
   const [currentPlayer, setCurrentPlayer] = useState(player)
   const [currentEnemy, setCurrentEnemy] = useState(enemy)
+  const [playerHealth, setPlayerHealth] = useState(100)
+  const [enemyHealth, setEnemyHealth] = useState(100)
 
   const ref = useRef(null)
 
@@ -94,8 +96,10 @@ const useCanvas = () => {
     ) {
       updatedEnemy.health = Math.max(updatedEnemy.health - 10, 0)
       console.log("Enemy health:", updatedEnemy.health)
+      setEnemyHealth(updatedEnemy.health)
       setCurrentEnemy(updatedEnemy)
     }
+
     // detect successful enemy attack
     if (
       rectangularCollision({
@@ -106,7 +110,8 @@ const useCanvas = () => {
     ) {
       updatedPlayer.health = Math.max(updatedPlayer.health - 10, 0)
       console.log("Player health:", updatedPlayer.health)
-      setCurrentEnemy(updatedPlayer)
+      setPlayerHealth(updatedPlayer.health)
+      setCurrentPlayer(updatedPlayer)
     }
   }
 

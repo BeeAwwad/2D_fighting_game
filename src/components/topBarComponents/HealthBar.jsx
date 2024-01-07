@@ -1,6 +1,6 @@
 import PropTypes from "prop-types"
 
-function HealthBar({ fighter }) {
+function HealthBar({ fighter, styles }) {
   const fighterHealth = fighter.health
   const healthBar = calculateHealthBar(fighterHealth)
 
@@ -9,20 +9,18 @@ function HealthBar({ fighter }) {
   }
 
   return (
-    <div className="relative h-8 w-full">
-      <div className="bg-gray-300 h-8"></div>
+    <div className={`relative w-full bg-gray-300 h-8 ${styles}`}>
       <div
-        className={`absolute bg-red-600 top-0 right-0 bottom-0 left-0`}
+        className="absolute bg-red-600 h-full"
         style={{ width: `${healthBar}%` }}
-      >
-        {fighterHealth}
-      </div>
+      ></div>
     </div>
   )
 }
 
 HealthBar.propTypes = {
   fighter: PropTypes.object.isRequired,
+  styles: PropTypes.string,
 }
 
 export default HealthBar

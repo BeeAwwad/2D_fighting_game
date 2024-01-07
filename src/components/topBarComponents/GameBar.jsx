@@ -7,9 +7,9 @@ function GameBar(props) {
 
   return (
     <div className="absolute flex w-full items-center p-4">
-      <HealthBar fighter={player} />
+      <HealthBar fighter={player} styles={"flex justify-end"} />
       <Timer />
-      <HealthBar fighter={enemy} />
+      <HealthBar fighter={enemy} styles={""} />
     </div>
   )
 }

@@ -9,20 +9,21 @@ const useCountdown = (initialTime, callBack, interval = 1000) => {
 
   useEffect(() => {
     const customInterval = setInterval(() => {
-      if (time > 0) {
-        setTime((prev) => prev - interval)
-      }
+      setTime((prevTime) => {
+        if (prevTime > 0) {
+          return prevTime - 1
+        } else {
+          stop()
+          callBack()
+          return 0
+        }
+      })
     }, interval)
 
-    if (time === 0) {
-      callBack()
-    }
-
-    // Cleanup function to clear interval on unmount or when stopped
     return () => clearInterval(customInterval)
-  }, [time, interval, callBack])
+  }, [interval, callBack])
 
-  return { time, stop }
+  return { time }
 }
 
 export default useCountdown

@@ -9,9 +9,9 @@ function HealthBar({ fighter, styles }) {
   }
 
   return (
-    <div className={`relative w-full bg-gray-300 h-8 ${styles}`}>
+    <div className={`relative w-full bg-[#c52c18] h-8 ${styles}`}>
       <div
-        className="absolute bg-red-600 h-full"
+        className="absolute bg-[#dba572] h-full"
         style={{ width: `${healthBar}%` }}
       ></div>
     </div>

@@ -16,7 +16,9 @@ const useCanvas = () => {
   const [currentEnemy, setCurrentEnemy] = useState(enemy)
   const [playerHealth, setPlayerHealth] = useState(100)
   const [enemyHealth, setEnemyHealth] = useState(100)
-  const [gameTime, setGameTime] = useState(30)
+  const { time } = useCountdown(30, () => {
+    console.log("Game over")
+  })
 
   const ref = useRef(null)
 
@@ -134,10 +136,6 @@ const useCanvas = () => {
     requestAnimationFrame(() => gameLoop(ctx, cnv))
   }
 
-  useCountdown(gameTime, () => {
-    console.log("Game over")
-  })
-
   // this useEffect renders the drawing to the canvas
   useEffect(() => {
     const canvas = ref.current
@@ -147,7 +145,7 @@ const useCanvas = () => {
     }
   }, [])
 
-  return [ref, currentPlayer, currentEnemy, gameTime, playerHealth, enemyHealth]
+  return [ref, currentPlayer, currentEnemy, time, playerHealth, enemyHealth]
 }
 
 export default useCanvas

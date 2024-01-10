@@ -3,11 +3,11 @@ import GameBar from "./topBarComponents/GameBar"
 import gameWorld from "./gameWorld"
 
 const GameCanvas = () => {
-  const [ref, currentPlayer, currentEnemy] = useCanvas()
+  const [ref, currentPlayer, currentEnemy, gameTime] = useCanvas()
 
   return (
     <div className="relative inline-block">
-      <GameBar player={currentPlayer} enemy={currentEnemy} />
+      <GameBar player={currentPlayer} enemy={currentEnemy} time={gameTime} />
       {/* Canvas for the game */}
       <canvas
         ref={ref}

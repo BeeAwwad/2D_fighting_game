@@ -7,6 +7,7 @@ import Sprite from "../sprite"
 import cloneDeep from "lodash.clonedeep"
 import playerSprite from "../fighters/playerSprite"
 import botSprite from "../fighters/botSprite"
+import useCountdown from "./useCountdown"
 
 const useCanvas = () => {
   const player = cloneDeep(playerSprite)
@@ -15,6 +16,7 @@ const useCanvas = () => {
   const [currentEnemy, setCurrentEnemy] = useState(enemy)
   const [playerHealth, setPlayerHealth] = useState(100)
   const [enemyHealth, setEnemyHealth] = useState(100)
+  const [gameTime, setGameTime] = useState(30)
 
   const ref = useRef(null)
 
@@ -132,17 +134,20 @@ const useCanvas = () => {
     requestAnimationFrame(() => gameLoop(ctx, cnv))
   }
 
+  useCountdown(gameTime, () => {
+    console.log("Game over")
+  })
+
   // this useEffect renders the drawing to the canvas
   useEffect(() => {
     const canvas = ref.current
     if (canvas) {
       const context = canvas.getContext("2d")
-
       gameLoop(context, canvas)
     }
   }, [])
 
-  return [ref, currentPlayer, currentEnemy, playerHealth, enemyHealth]
+  return [ref, currentPlayer, currentEnemy, gameTime, playerHealth, enemyHealth]
 }
 
 export default useCanvas

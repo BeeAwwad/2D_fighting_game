@@ -98,6 +98,7 @@ const useCanvas = () => {
       }) &&
       updatedPlayer.isAttacking
     ) {
+      updatedPlayer.isAttacking = false
       updatedEnemy.health = Math.max(updatedEnemy.health - 10, 0)
       setEnemyHealth(updatedEnemy.health)
       setCurrentEnemy(updatedEnemy)
@@ -111,6 +112,7 @@ const useCanvas = () => {
       }) &&
       updatedEnemy.isAttacking
     ) {
+      updatedEnemy.isAttacking = false
       updatedPlayer.health = Math.max(updatedPlayer.health - 10, 0)
       setPlayerHealth(updatedPlayer.health)
       setCurrentPlayer(updatedPlayer)

@@ -10,7 +10,7 @@ const updateBot = (bot, player) => {
   } else {
     // Stop moving if the bot is aligned with the player
     bot.velocity.x = 0
-    bot.attack()
+    // bot.attack()
   }
 
   // Implement attack logic here

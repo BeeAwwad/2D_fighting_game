@@ -1,6 +1,7 @@
 import { useRef, useEffect, useMemo, useState } from "react"
 import Keys from "../keys"
 import { DrawCanvas } from "../functions/drawFunc"
+import { whoWon } from "../functions/whoWon"
 import updateBot from "../botLogic"
 import useKeyboardMouse from "./useKeyboardMouse"
 import Sprite from "../sprite"
@@ -14,11 +15,9 @@ const useCanvas = () => {
   const enemy = cloneDeep(botSprite)
   const [currentPlayer, setCurrentPlayer] = useState(player)
   const [currentEnemy, setCurrentEnemy] = useState(enemy)
+
   const [playerHealth, setPlayerHealth] = useState(100)
   const [enemyHealth, setEnemyHealth] = useState(100)
-  const { time } = useCountdown(30, () => {
-    console.log("Game over")
-  })
 
   const ref = useRef(null)
 
@@ -47,6 +46,10 @@ const useCanvas = () => {
 
     return new Sprite({ ctx, offset, lastKey, ...enemyrWithoutOffset })
   }, [currentEnemy])
+
+  const { time } = useCountdown(10, () => {
+    whoWon(currentPlayer, currentEnemy)
+  })
 
   // collision statements between attack box and body box
   const rectangularCollision = ({ rectangle1, rectangle2 }) => {
@@ -82,13 +85,10 @@ const useCanvas = () => {
       updatedPlayer.velocity.x = 4
     }
 
-    // Other modifications to player can be done here...
     setCurrentPlayer(updatedPlayer)
 
     // Bot behavioirs
     updateBot(updatedEnemy, updatedPlayer)
-
-    // Additional update logic for enemy, collisions, etc.
 
     // detect successful attack
     if (

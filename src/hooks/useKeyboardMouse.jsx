@@ -1,5 +1,5 @@
 import { useEffect } from "react"
-import Keys from "../keys"
+import Keys from "../gameObjects/keys"
 
 // Hook to handle keyboard and mouse events like left right jump and attack
 const useKeyboardMouse = (playerSprite) => {

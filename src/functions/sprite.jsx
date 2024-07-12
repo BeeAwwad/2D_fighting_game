@@ -1,7 +1,6 @@
-import { DrawPlayer } from "./functions/drawFunc"
-import { checkObject } from "./functions/checkObject"
-import gameWorld from "./gameWorld"
-
+import { DrawPlayer } from "./drawFunc"
+import { checkObject } from "../functions/checkObject"
+import gameWorld from "../gameObjects/gameWorld"
 // Constructor function for making new players
 function Sprite({ position, velocity, color, offset }) {
   this.position = position

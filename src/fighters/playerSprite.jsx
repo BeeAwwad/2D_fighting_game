@@ -1,4 +1,4 @@
-import Sprite from "../sprite"
+import Sprite from "../functions/sprite"
 
 // Player Sprite
 const playerSprite = new Sprite({

@@ -1,10 +1,10 @@
 import { useRef, useEffect, useMemo, useState } from "react"
-import Keys from "../keys"
+import Keys from "../gameObjects/keys"
 import { DrawCanvas } from "../functions/drawFunc"
 import { whoWon } from "../functions/whoWon"
-import updateBot from "../botLogic"
+import updateBot from "../functions/botLogic"
 import useKeyboardMouse from "./useKeyboardMouse"
-import Sprite from "../sprite"
+import Sprite from "../functions/sprite"
 import cloneDeep from "lodash.clonedeep"
 import playerSprite from "../fighters/playerSprite"
 import botSprite from "../fighters/botSprite"
@@ -15,7 +15,6 @@ const useCanvas = () => {
   const enemy = cloneDeep(botSprite)
   const [currentPlayer, setCurrentPlayer] = useState(player)
   const [currentEnemy, setCurrentEnemy] = useState(enemy)
-
   const [playerHealth, setPlayerHealth] = useState(100)
   const [enemyHealth, setEnemyHealth] = useState(100)
 

@@ -1,9 +1,9 @@
 export const whoWon = (updatedPlayer, updatedEnemy) => {
   if (updatedPlayer.health === updatedEnemy.health) {
-    console.log("Draw")
+    return "Draw"
   } else if (updatedPlayer.health > updatedEnemy.health) {
-    console.log("You Won!")
+    return "You Won!"
   } else if (updatedPlayer.health < updatedEnemy.health) {
-    console.log("You Lost :(")
+    return "You Lost :("
   }
 }

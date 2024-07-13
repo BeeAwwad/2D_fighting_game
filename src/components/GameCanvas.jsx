@@ -4,13 +4,14 @@ import gameWorld from "../gameObjects/gameWorld"
 import { MatchResult } from "./MatchResult"
 
 const GameCanvas = () => {
-  const [ref, currentPlayer, currentEnemy, gameTime] = useCanvas()
+  const [ref, currentPlayer, currentEnemy, time, fightResults] = useCanvas()
+  console.log("fightResults", fightResults)
 
   return (
     <div className="relative inline-block">
-      <GameBar player={currentPlayer} enemy={currentEnemy} time={gameTime} />
+      <GameBar player={currentPlayer} enemy={currentEnemy} time={time} />
       {/* Canvas for the game */}
-      <MatchResult />
+      <MatchResult fightResults={fightResults} />
       <canvas
         ref={ref}
         width={gameWorld.canvasWidth}

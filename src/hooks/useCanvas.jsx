@@ -47,11 +47,9 @@ const useCanvas = () => {
     return new Sprite({ ctx, offset, lastKey, ...enemyrWithoutOffset })
   }, [currentEnemy])
 
-  const resultsFunction = () => {
+  const { time } = useCountdown(15, () => {
     setFightResults(whoWon(currentPlayer, currentEnemy))
-  }
-
-  const { time } = useCountdown(10, resultsFunction)
+  })
 
   // collision statements between attack box and body box
   const rectangularCollision = ({ rectangle1, rectangle2 }) => {
@@ -130,8 +128,6 @@ const useCanvas = () => {
     updatedEnemy.render()
     setCurrentPlayer(updatedPlayer)
     setCurrentEnemy(updatedEnemy)
-    // Render enemy, other game elements, etc.
-    // enemy.render();
   }
 
   const gameLoop = (ctx, cnv) => {
@@ -148,6 +144,12 @@ const useCanvas = () => {
       gameLoop(context, canvas)
     }
   }, [])
+
+  useEffect(() => {
+    if (playerHealth <= 0 || enemyHealth <= 0) {
+      setFightResults(whoWon(currentPlayer, currentEnemy))
+    }
+  }, [playerHealth, enemyHealth, currentPlayer, currentEnemy])
 
   return [
     ref,

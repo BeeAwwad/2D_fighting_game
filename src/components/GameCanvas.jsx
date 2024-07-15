@@ -5,7 +5,6 @@ import { MatchResult } from "./MatchResult"
 
 const GameCanvas = () => {
   const [ref, currentPlayer, currentEnemy, time, fightResults] = useCanvas()
-  console.log("fightResults", fightResults)
 
   return (
     <div className="relative inline-block">

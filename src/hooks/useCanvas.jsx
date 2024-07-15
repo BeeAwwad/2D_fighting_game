@@ -18,6 +18,7 @@ const useCanvas = () => {
   const [playerHealth, setPlayerHealth] = useState(100)
   const [enemyHealth, setEnemyHealth] = useState(100)
   const [fightResults, setFightResults] = useState(null)
+  const [stopCountdown, setStopCountdown] = useState(false)
 
   const ref = useRef(null)
 
@@ -47,9 +48,13 @@ const useCanvas = () => {
     return new Sprite({ ctx, offset, lastKey, ...enemyrWithoutOffset })
   }, [currentEnemy])
 
-  const { time } = useCountdown(15, () => {
-    setFightResults(whoWon(currentPlayer, currentEnemy))
-  })
+  const { time } = useCountdown(
+    15,
+    () => {
+      setFightResults(whoWon(currentPlayer, currentEnemy))
+    },
+    stopCountdown
+  )
 
   // collision statements between attack box and body box
   const rectangularCollision = ({ rectangle1, rectangle2 }) => {
@@ -148,6 +153,7 @@ const useCanvas = () => {
   useEffect(() => {
     if (playerHealth <= 0 || enemyHealth <= 0) {
       setFightResults(whoWon(currentPlayer, currentEnemy))
+      setStopCountdown(true)
     }
   }, [playerHealth, enemyHealth, currentPlayer, currentEnemy])
 

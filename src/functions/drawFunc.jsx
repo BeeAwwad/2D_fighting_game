@@ -1,5 +1,5 @@
 // create black canvas fuction
-const DrawCanvas = (ctx) => {
+export const DrawCanvas = (ctx) => {
   // console.log("Canvas Context for DrawCanvas:", ctx);
   const canvasWidth = ctx.canvas.width
   const canvasHeight = ctx.canvas.height
@@ -8,7 +8,7 @@ const DrawCanvas = (ctx) => {
   ctx.fillRect(0, 0, canvasWidth, canvasHeight)
 }
 // Draw Player
-const DrawPlayer = (ctx, sprite) => {
+export const DrawPlayer = (ctx, sprite) => {
   ctx.fillStyle = sprite.color.body
   ctx.fillRect(
     sprite.position.x,
@@ -28,4 +28,7 @@ const DrawPlayer = (ctx, sprite) => {
     )
   }
 }
-export { DrawCanvas, DrawPlayer }
+
+export const DrawBackground = (ctx, sprite) => {
+  ctx.drawImage(sprite.image, sprite.position.x, sprite.position.y)
+}

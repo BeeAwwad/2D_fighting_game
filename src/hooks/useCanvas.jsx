@@ -3,11 +3,15 @@ import Keys from "../gameObjects/keys"
 import { DrawCanvas } from "../functions/drawFunc"
 import { whoWon } from "../functions/whoWon"
 import updateBot from "../functions/botLogic"
+import { rectangularCollision } from "../functions/rectangularCollision"
 import useKeyboardMouse from "./useKeyboardMouse"
-import Sprite from "../functions/sprite"
+import { Fighter } from "../functions/sprite"
 import cloneDeep from "lodash.clonedeep"
-import playerSprite from "../fighters/playerSprite"
-import botSprite from "../fighters/botSprite"
+import {
+  botSprite,
+  playerSprite,
+  backgroundSprite,
+} from "../gameSprites/gameSprites"
 import useCountdown from "./useCountdown"
 
 const useCanvas = () => {
@@ -31,7 +35,7 @@ const useCanvas = () => {
       ...playerWithoutOffset
     } = currentPlayer
 
-    return new Sprite({ ctx, offset, lastKey, ...playerWithoutOffset })
+    return new Fighter({ ctx, offset, lastKey, ...playerWithoutOffset })
   }, [currentPlayer])
 
   useKeyboardMouse(updatedPlayer)
@@ -45,7 +49,7 @@ const useCanvas = () => {
       ...enemyrWithoutOffset
     } = currentEnemy
 
-    return new Sprite({ ctx, offset, lastKey, ...enemyrWithoutOffset })
+    return new Fighter({ ctx, offset, lastKey, ...enemyrWithoutOffset })
   }, [currentEnemy])
 
   const { time } = useCountdown(
@@ -56,26 +60,10 @@ const useCanvas = () => {
     stopCountdown
   )
 
-  // collision statements between attack box and body box
-  const rectangularCollision = ({ rectangle1, rectangle2 }) => {
-    return (
-      rectangle1.position.x +
-        rectangle1.attackBox.width +
-        rectangle1.attackBox.offset.x >=
-        rectangle2.position.x &&
-      rectangle1.position.x + rectangle1.attackBox.offset.x <=
-        rectangle2.position.x + rectangle2.width &&
-      rectangle1.position.y + rectangle1.attackBox.height >=
-        rectangle2.position.y &&
-      rectangle1.attackBox.position.y <=
-        rectangle2.position.y + rectangle2.height
-    )
-  }
-
   const update = (ctx) => {
     // Update player logic
     const updatedAttackBox = { ...updatedPlayer.attackBox }
-
+    backgroundSprite.setContext(ctx)
     updatedPlayer.setContext(ctx)
     updatedEnemy.setContext(ctx)
     updatedPlayer.attackBox = updatedAttackBox
@@ -127,6 +115,9 @@ const useCanvas = () => {
   const render = (ctx, cnv) => {
     ctx.clearRect(0, 0, cnv.width, cnv.height) // Clear the canvas
     DrawCanvas(ctx)
+
+    //render background
+    backgroundSprite.render()
 
     // Render player
     updatedPlayer.render()

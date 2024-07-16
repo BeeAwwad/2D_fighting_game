@@ -1,8 +1,8 @@
-import { DrawPlayer } from "./drawFunc"
-import { checkObject } from "../functions/checkObject"
+import { DrawPlayer, DrawBackground } from "./drawFunc"
+import { checkObject } from "./checkObject"
 import gameWorld from "../gameObjects/gameWorld"
 // Constructor function for making new players
-function Sprite({ position, velocity, color, offset }) {
+export function Fighter({ position, velocity, color, offset }) {
   this.position = position
   this.velocity = velocity
   this.height = 150
@@ -24,7 +24,7 @@ function Sprite({ position, velocity, color, offset }) {
     attack: color.attack,
   }
   this.isAttacking = false
-  this.attackCooldown = false // Added property to track cooldown
+  this.attackCooldown = false
   this.health = 100
   this.ctx = null
 
@@ -72,4 +72,24 @@ function Sprite({ position, velocity, color, offset }) {
   }
 }
 
-export default Sprite
+export function Sprite({ position, imageSrc }) {
+  this.position = position
+  this.width = 50
+  this.height = 150
+  this.ctx
+  this.image = new Image()
+  this.image.src = imageSrc
+
+  this.setContext = function (ctx) {
+    if (ctx == null) {
+      throw new Error("Context cannot be null")
+    }
+    this.ctx = ctx
+  }
+
+  this.render = function () {
+    if (this.ctx && this.image.complete) {
+      DrawBackground(this.ctx, this)
+    }
+  }
+}

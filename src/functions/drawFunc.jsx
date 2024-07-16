@@ -29,6 +29,16 @@ export const DrawPlayer = (ctx, sprite) => {
   }
 }
 
-export const DrawBackground = (ctx, sprite) => {
-  ctx.drawImage(sprite.image, sprite.position.x, sprite.position.y)
+export const DrawImage = (ctx, sprite, scale, frameMax, frameCurrent) => {
+  ctx.drawImage(
+    sprite.image,
+    frameCurrent * (sprite.image.width / frameMax),
+    0,
+    sprite.image.width / frameMax,
+    sprite.image.height,
+    sprite.position.x,
+    sprite.position.y,
+    (sprite.image.width / frameMax) * scale,
+    sprite.image.height * scale
+  )
 }

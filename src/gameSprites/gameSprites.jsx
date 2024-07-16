@@ -47,3 +47,13 @@ export const backgroundSprite = new Sprite({
   },
   imageSrc: "/background.png",
 })
+
+export const shopSprite = new Sprite({
+  position: {
+    x: 600,
+    y: 128,
+  },
+  imageSrc: "/shop.png",
+  scale: 2.75,
+  frameMax: 6,
+})

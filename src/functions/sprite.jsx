@@ -1,7 +1,43 @@
-import { DrawPlayer, DrawBackground } from "./drawFunc"
+import { DrawPlayer, DrawImage } from "./drawFunc"
 import { checkObject } from "./checkObject"
 import gameWorld from "../gameObjects/gameWorld"
-// Constructor function for making new players
+
+export function Sprite({ position, imageSrc, scale = 1, frameMax = 1 }) {
+  this.position = position
+  this.width = 50
+  this.height = 150
+  this.ctx
+  this.image = new Image()
+  this.image.src = imageSrc
+  this.scale = scale
+  this.frameMax = frameMax
+  this.frameCurrent = 0
+  this.frameElasped = 0
+  this.frameHold = 10
+
+  this.setContext = function (ctx) {
+    if (ctx == null) {
+      throw new Error("Context cannot be null")
+    }
+    this.ctx = ctx
+  }
+
+  this.render = function () {
+    if (this.ctx && this.image.complete) {
+      DrawImage(this.ctx, this, this.scale, this.frameMax, this.frameCurrent)
+      this.frameElasped++
+
+      if (this.frameElasped % this.frameHold === 0) {
+        if (this.frameCurrent < this.frameMax - 1) {
+          this.frameCurrent++
+        } else {
+          this.frameCurrent = 0
+        }
+      }
+    }
+  }
+}
+
 export function Fighter({ position, velocity, color, offset }) {
   this.position = position
   this.velocity = velocity
@@ -46,7 +82,10 @@ export function Fighter({ position, velocity, color, offset }) {
     this.position.y += this.velocity.y
 
     // gravity logic
-    if (this.position.y + this.height + this.velocity.y >= this.canvasHeight) {
+    if (
+      this.position.y + this.height + this.velocity.y >=
+      this.canvasHeight - 95
+    ) {
       this.velocity.y = 0 // this part prevents the player from falling through the ground
     } else {
       this.velocity.y += this.gravity // while this part makes the player fall down
@@ -68,28 +107,6 @@ export function Fighter({ position, velocity, color, offset }) {
       setTimeout(() => {
         this.isAttacking = false
       }, 100)
-    }
-  }
-}
-
-export function Sprite({ position, imageSrc }) {
-  this.position = position
-  this.width = 50
-  this.height = 150
-  this.ctx
-  this.image = new Image()
-  this.image.src = imageSrc
-
-  this.setContext = function (ctx) {
-    if (ctx == null) {
-      throw new Error("Context cannot be null")
-    }
-    this.ctx = ctx
-  }
-
-  this.render = function () {
-    if (this.ctx && this.image.complete) {
-      DrawBackground(this.ctx, this)
     }
   }
 }

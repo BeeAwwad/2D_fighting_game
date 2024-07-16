@@ -11,6 +11,7 @@ import {
   botSprite,
   playerSprite,
   backgroundSprite,
+  shopSprite,
 } from "../gameSprites/gameSprites"
 import useCountdown from "./useCountdown"
 
@@ -64,6 +65,7 @@ const useCanvas = () => {
     // Update player logic
     const updatedAttackBox = { ...updatedPlayer.attackBox }
     backgroundSprite.setContext(ctx)
+    shopSprite.setContext(ctx)
     updatedPlayer.setContext(ctx)
     updatedEnemy.setContext(ctx)
     updatedPlayer.attackBox = updatedAttackBox
@@ -116,8 +118,9 @@ const useCanvas = () => {
     ctx.clearRect(0, 0, cnv.width, cnv.height) // Clear the canvas
     DrawCanvas(ctx)
 
-    //render background
+    //render images
     backgroundSprite.render()
+    shopSprite.render()
 
     // Render player
     updatedPlayer.render()

@@ -1,4 +1,4 @@
-const updateBot = (bot, player) => {
+const botBehaviour = (bot, player) => {
   // Implement bot logic here
 
   if (bot.position.x + bot.attackBox.width < player.position.x) {
@@ -19,4 +19,4 @@ const updateBot = (bot, player) => {
   // }
 }
 
-export default updateBot
+export default botBehaviour

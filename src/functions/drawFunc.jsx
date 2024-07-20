@@ -36,8 +36,8 @@ export const DrawImage = (ctx, sprite, scale, frameMax, frameCurrent) => {
     0,
     sprite.image.width / frameMax,
     sprite.image.height,
-    sprite.position.x,
-    sprite.position.y,
+    sprite.position.x - sprite.imageOffset.x,
+    sprite.position.y - sprite.imageOffset.y,
     (sprite.image.width / frameMax) * scale,
     sprite.image.height * scale
   )

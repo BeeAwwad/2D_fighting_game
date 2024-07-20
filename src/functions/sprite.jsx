@@ -1,107 +1,121 @@
-import { DrawPlayer, DrawImage } from "./drawFunc"
-import { checkObject } from "./checkObject"
+import { DrawImage } from "./drawFunc"
 import gameWorld from "../gameObjects/gameWorld"
 
-export function Sprite({ position, imageSrc, scale = 1, frameMax = 1 }) {
-  this.position = position
-  this.width = 50
-  this.height = 150
-  this.ctx
-  this.image = new Image()
-  this.image.src = imageSrc
-  this.scale = scale
-  this.frameMax = frameMax
-  this.frameCurrent = 0
-  this.frameElasped = 0
-  this.frameHold = 10
+export class Sprite {
+  constructor({
+    position,
+    imageSrc,
+    scale = 1,
+    frameMax = 1,
+    imageOffset = { x: 0, y: 0 },
+  }) {
+    this.position = position
+    this.width = 50
+    this.height = 150
+    this.ctx = null
+    this.image = new Image()
+    this.image.src = imageSrc
+    console.log("this.image.src:", this.image.src)
+    this.scale = scale
+    this.frameMax = frameMax
+    this.frameCurrent = 0
+    this.frameElasped = 0
+    this.frameHold = 10
+    this.imageOffset = imageOffset
+  }
 
-  this.setContext = function (ctx) {
+  setContext(ctx) {
     if (ctx == null) {
       throw new Error("Context cannot be null")
     }
     this.ctx = ctx
   }
 
-  this.render = function () {
-    if (this.ctx && this.image.complete) {
-      DrawImage(this.ctx, this, this.scale, this.frameMax, this.frameCurrent)
-      this.frameElasped++
+  draw() {
+    DrawImage(this.ctx, this, this.scale, this.frameMax, this.frameCurrent)
+  }
 
-      if (this.frameElasped % this.frameHold === 0) {
-        if (this.frameCurrent < this.frameMax - 1) {
-          this.frameCurrent++
-        } else {
-          this.frameCurrent = 0
-        }
+  animateFrames() {
+    this.frameElasped++
+
+    if (this.frameElasped % this.frameHold === 0) {
+      if (this.frameCurrent < this.frameMax - 1) {
+        this.frameCurrent++
+      } else {
+        this.frameCurrent = 0
       }
+    }
+  }
+
+  render() {
+    if (this.ctx && this.image.complete) {
+      this.draw()
+      this.animateFrames()
     }
   }
 }
 
-export function Fighter({ position, velocity, color, offset }) {
-  this.position = position
-  this.velocity = velocity
-  this.height = 150
-  this.width = 50
-  this.canvasHeight = gameWorld.canvasHeight
-  this.gravity = gameWorld.gravity
-  this.lastKey = null
-  this.attackBox = {
-    position: {
-      x: this.position.x,
-      y: this.position.y,
-    },
-    offset: { x: offset.x, y: offset.y },
-    width: 100,
-    height: 50,
-  }
-  this.color = {
-    body: color.body,
-    attack: color.attack,
-  }
-  this.isAttacking = false
-  this.attackCooldown = false
-  this.health = 100
-  this.ctx = null
+export class Fighter extends Sprite {
+  constructor({
+    position,
+    velocity,
+    offset,
+    imageSrc,
+    scale = 1,
+    frameMax = 1,
+    imageOffset = { x: 0, y: 0 },
+  }) {
+    super({
+      position,
+      imageSrc,
+      scale,
+      frameMax,
+      imageOffset,
+    })
 
-  // makes sure the context is set before updating or rendering
-  this.setContext = function (ctx) {
-    if (ctx == null) {
-      throw new Error("Context cannot be null")
+    this.velocity = velocity
+    this.canvasHeight = gameWorld.canvasHeight
+    this.gravity = gameWorld.gravity
+    this.lastKey = null
+    this.attackBox = {
+      position: {
+        x: this.position.x,
+        y: this.position.y,
+      },
+      offset: { x: offset.x, y: offset.y },
+      width: 100,
+      height: 50,
     }
-    this.ctx = ctx
+    this.isAttacking = false
+    this.attackCooldown = false
+    this.health = 100
+    this.frameCurrent = 0
+    this.frameElasped = 0
+    this.frameHold = 10
   }
 
-  this.update = function () {
-    // this part allows me to reverse the attack box of the enemy using the sprite.attackBox.offset property
+  update() {
     this.attackBox.position.x = this.position.x + this.attackBox.offset.x
     this.attackBox.position.y = this.position.y
 
-    // player movement logic
     this.position.x += this.velocity.x
     this.position.y += this.velocity.y
 
-    // gravity logic
-    if (
-      this.position.y + this.height + this.velocity.y >=
-      this.canvasHeight - 95
-    ) {
-      this.velocity.y = 0 // this part prevents the player from falling through the ground
+    if (this.position.y + this.height + this.velocity.y >= this.canvasHeight) {
+      this.velocity.y = 0
     } else {
-      this.velocity.y += this.gravity // while this part makes the player fall down
-    }
-
-    // attack cooldown logic
-  }
-
-  this.render = function () {
-    // console.log("Rendering with context:", this.ctx);
-    if (checkObject(this.ctx)) {
-      DrawPlayer(this.ctx, this)
+      this.velocity.y += this.gravity
     }
   }
 
-  this.attack = function () {
+  render() {
+    if (this.ctx && this.image.complete) {
+      this.draw()
+      this.animateFrames()
+    }
+  }
+
+  attack() {
     if (!this.isAttacking) {
       this.isAttacking = true
       setTimeout(() => {

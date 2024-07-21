@@ -64,6 +64,7 @@ export class Fighter extends Sprite {
     framesMax = 1,
     imageOffset = { x: 0, y: 0 },
     sprites,
+    attackCooldownTime = 800,
   }) {
     super({
       position,
@@ -88,6 +89,8 @@ export class Fighter extends Sprite {
     }
     this.isAttacking = false
     this.attackCooldown = false
+    this.attackCooldownTime = attackCooldownTime
+    this.attackCooldownEndTime = 0
     this.health = 100
     this.frameCurrent = 0
     this.frameElasped = 0
@@ -101,6 +104,10 @@ export class Fighter extends Sprite {
   }
 
   update() {
+    if (this.attackCooldown && Date.now() >= this.attackCooldownEndTime) {
+      this.attackCooldown = false
+    }
+
     this.attackBox.position.x = this.position.x + this.attackBox.offset.x
     this.attackBox.position.y = this.position.y
 
@@ -123,15 +130,26 @@ export class Fighter extends Sprite {
   }
 
   attack() {
-    if (!this.isAttacking) {
+    if (!this.isAttacking && !this.attackCooldown) {
+      this.switchSprites("attackOne")
       this.isAttacking = true
+      this.attackCooldown = true
       setTimeout(() => {
         this.isAttacking = false
-      }, 100)
+        this.attackCooldown = false
+      }, this.attackCooldownTime)
+
+      this.attackCooldownEndTime = Date.now + this.attackCooldownTime
     }
   }
 
   switchSprites(sprite) {
+    if (
+      this.image === this.sprites.attackOne.image &&
+      this.frameCurrent < this.sprites.attackOne.framesMax - 1
+    )
+      return
+
     switch (sprite) {
       case "idle":
         if (this.image !== this.sprites.idle.image) {
@@ -158,6 +176,13 @@ export class Fighter extends Sprite {
         if (this.image !== this.sprites.fall.image) {
           this.image = this.sprites.fall.image
           this.framesMax = this.sprites.fall.framesMax
+          this.frameCurrent = 0
+        }
+        break
+      case "attackOne":
+        if (this.image !== this.sprites.attackOne.image) {
+          this.image = this.sprites.attackOne.image
+          this.framesMax = this.sprites.attackOne.framesMax
           this.frameCurrent = 0
         }
         break

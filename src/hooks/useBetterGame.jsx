@@ -37,10 +37,10 @@ const useBetterGame = () => {
     backgroundSprite.setContext(ctx)
     shopSprite.setContext(ctx)
     playerRef.current.setContext(ctx)
-    // enemyRef.current.setContext(ctx)
+    enemyRef.current.setContext(ctx)
 
     playerRef.current.update()
-    // enemyRef.current.update()
+    enemyRef.current.update()
 
     // fighter movement logic
     playerRef.current.velocity.x = 0

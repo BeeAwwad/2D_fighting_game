@@ -4,19 +4,17 @@ const botBehaviour = (bot, player) => {
   if (bot.position.x + bot.attackBox.width < player.position.x) {
     // Move the bot right
     bot.velocity.x = 1
+    bot.switchSprites("run")
   } else if (bot.position.x - bot.attackBox.width > player.position.x) {
     // Move the bot left
     bot.velocity.x = -1
+    bot.switchSprites("run")
   } else {
     // Stop moving if the bot is aligned with the player
     bot.velocity.x = 0
+    bot.switchSprites("idle")
     // bot.attack()
   }
-
-  // Implement attack logic here
-  // if (/* condition for bot to attack */) {
-  //   bot.attack();
-  // }
 }
 
 export default botBehaviour

@@ -6,7 +6,7 @@ export class Sprite {
     position,
     imageSrc,
     scale = 1,
-    frameMax = 1,
+    framesMax = 1,
     imageOffset = { x: 0, y: 0 },
   }) {
     this.position = position
@@ -15,9 +15,8 @@ export class Sprite {
     this.ctx = null
     this.image = new Image()
     this.image.src = imageSrc
-    console.log("this.image.src:", this.image.src)
     this.scale = scale
-    this.frameMax = frameMax
+    this.framesMax = framesMax
     this.frameCurrent = 0
     this.frameElasped = 0
     this.frameHold = 10
@@ -32,14 +31,14 @@ export class Sprite {
   }
 
   draw() {
-    DrawImage(this.ctx, this, this.scale, this.frameMax, this.frameCurrent)
+    DrawImage(this.ctx, this, this.scale, this.framesMax, this.frameCurrent)
   }
 
   animateFrames() {
     this.frameElasped++
 
     if (this.frameElasped % this.frameHold === 0) {
-      if (this.frameCurrent < this.frameMax - 1) {
+      if (this.frameCurrent < this.framesMax - 1) {
         this.frameCurrent++
       } else {
         this.frameCurrent = 0
@@ -62,14 +61,15 @@ export class Fighter extends Sprite {
     offset,
     imageSrc,
     scale = 1,
-    frameMax = 1,
+    framesMax = 1,
     imageOffset = { x: 0, y: 0 },
+    sprites,
   }) {
     super({
       position,
       imageSrc,
       scale,
-      frameMax,
+      framesMax,
       imageOffset,
     })
 
@@ -91,7 +91,13 @@ export class Fighter extends Sprite {
     this.health = 100
     this.frameCurrent = 0
     this.frameElasped = 0
-    this.frameHold = 10
+    this.frameHold = 12
+    this.sprites = sprites
+
+    for (const sprite in this.sprites) {
+      sprites[sprite].image = new Image()
+      sprites[sprite].image.src = sprites[sprite].imageSrc
+    }
   }
 
   update() {

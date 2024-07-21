@@ -18,7 +18,7 @@ export const DrawPlayer = (ctx, sprite) => {
   )
 
   // attack box
-  if (sprite.isAttacking) {
+  if (sprite.isttacking) {
     ctx.fillStyle = sprite.color.attack
     ctx.fillRect(
       sprite.attackBox.position.x,
@@ -29,16 +29,16 @@ export const DrawPlayer = (ctx, sprite) => {
   }
 }
 
-export const DrawImage = (ctx, sprite, scale, frameMax, frameCurrent) => {
+export const DrawImage = (ctx, sprite, scale, framesMax, frameCurrent) => {
   ctx.drawImage(
     sprite.image,
-    frameCurrent * (sprite.image.width / frameMax),
+    frameCurrent * (sprite.image.width / framesMax),
     0,
-    sprite.image.width / frameMax,
+    sprite.image.width / framesMax,
     sprite.image.height,
     sprite.position.x - sprite.imageOffset.x,
     sprite.position.y - sprite.imageOffset.y,
-    (sprite.image.width / frameMax) * scale,
+    (sprite.image.width / framesMax) * scale,
     sprite.image.height * scale
   )
 }

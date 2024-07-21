@@ -20,12 +20,12 @@ const useBetterGame = () => {
   const enemyRef = useRef(botSprite)
   const [playerHealth, setPlayerHealth] = useState(100)
   const [enemyHealth, setEnemyHealth] = useState(100)
-  const fightResultsRef = useRef(null)
+  const [fightResult, setFightRelsuts] = useState("")
   const [stopCountdown, setStopCountdown] = useState(false)
   const { time } = useCountdown(
     15,
     () => {
-      fightResultsRef.current = whoWon(playerRef.current, enemyRef.current)
+      setFightRelsuts(whoWon(playerRef.current, enemyRef.current))
     },
     stopCountdown
   )
@@ -37,17 +37,26 @@ const useBetterGame = () => {
     backgroundSprite.setContext(ctx)
     shopSprite.setContext(ctx)
     playerRef.current.setContext(ctx)
-    enemyRef.current.setContext(ctx)
+    // enemyRef.current.setContext(ctx)
 
     playerRef.current.update()
-    enemyRef.current.update()
+    // enemyRef.current.update()
 
     // fighter movement logic
     playerRef.current.velocity.x = 0
+
     if (Keys.a.pressed && playerRef.current.lastKey === "a") {
       playerRef.current.velocity.x = -4
+      playerRef.current.image = playerRef.current.sprites.run.image
+      // playerRef.current.framesMax = playerRef.current.sprites.run.framesMax
     } else if (Keys.d.pressed && playerRef.current.lastKey === "d") {
       playerRef.current.velocity.x = 4
+      playerRef.current.image = playerRef.current.sprites.run.image
+      // playerRef.current.framesMax = playerRef.current.sprites.run.framesMax
+    } else {
+      playerRef.current.image = playerRef.current.sprites.idle.image
+      // playerRef.current.framesMax = playerRef.current.sprites.idle.framesMax
+      // console.log("else", playerRef.current.sprites.idle.image)
     }
 
     // Bot behavior
@@ -107,7 +116,7 @@ const useBetterGame = () => {
 
   useEffect(() => {
     if (playerHealth <= 0 || enemyHealth <= 0) {
-      fightResultsRef.current = whoWon(playerRef.current, enemyRef.current)
+      setFightRelsuts(whoWon(playerRef.current, enemyRef.current))
       setStopCountdown(true)
     }
   }, [playerHealth, enemyHealth])
@@ -117,7 +126,7 @@ const useBetterGame = () => {
     playerRef.current,
     enemyRef.current,
     time,
-    fightResultsRef.current,
+    fightResult,
     playerHealth,
     enemyHealth,
   ]

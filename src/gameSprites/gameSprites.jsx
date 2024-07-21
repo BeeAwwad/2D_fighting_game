@@ -1,6 +1,8 @@
 import { Fighter, Sprite } from "../functions/sprite"
 import samuraiIdle from "/samuraiMack/Idle.png"
 import samuraiRun from "/samuraiMack/Run.png"
+import samuraiJump from "/samuraiMack/Jump.png"
+import samuraiFall from "/samuraiMack/Fall.png"
 import kenjiIdle from "/kenji/Idle.png"
 import backgroundImage from "/background.png"
 import shopImage from "/shop.png"
@@ -34,6 +36,14 @@ export const playerSprite = new Fighter({
     run: {
       imageSrc: samuraiRun,
       framesMax: 8,
+    },
+    jump: {
+      imageSrc: samuraiJump,
+      framesMax: 2,
+    },
+    fall: {
+      imageSrc: samuraiFall,
+      framesMax: 2,
     },
   },
 })

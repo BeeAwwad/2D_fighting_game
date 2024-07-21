@@ -12,7 +12,7 @@ const useKeyboardMouse = (playerSprite) => {
         Keys.a.pressed = true
         playerSprite.lastKey = "a"
       } else if (e.key === " ") {
-        playerSprite.velocity.y = -18
+        playerSprite.velocity.y = -20
         Keys.space.pressed = true
       }
     }

@@ -46,19 +46,20 @@ const useBetterGame = () => {
     playerRef.current.velocity.x = 0
 
     if (Keys.a.pressed && playerRef.current.lastKey === "a") {
-      playerRef.current.velocity.x = -4
-      playerRef.current.image = playerRef.current.sprites.run.image
-      // playerRef.current.framesMax = playerRef.current.sprites.run.framesMax
+      playerRef.current.velocity.x = -3
+      playerRef.current.switchSprites("run")
     } else if (Keys.d.pressed && playerRef.current.lastKey === "d") {
-      playerRef.current.velocity.x = 4
-      playerRef.current.image = playerRef.current.sprites.run.image
-      // playerRef.current.framesMax = playerRef.current.sprites.run.framesMax
+      playerRef.current.velocity.x = 3
+      playerRef.current.switchSprites("run")
     } else {
-      playerRef.current.image = playerRef.current.sprites.idle.image
-      // playerRef.current.framesMax = playerRef.current.sprites.idle.framesMax
-      // console.log("else", playerRef.current.sprites.idle.image)
+      playerRef.current.switchSprites("idle")
     }
 
+    if (playerRef.current.velocity.y < 0) {
+      playerRef.current.switchSprites("jump")
+    } else if (playerRef.current.velocity.y > 0) {
+      playerRef.current.switchSprites("fall")
+    }
     // Bot behavior
     botBehaviour(enemyRef.current, playerRef.current)
 

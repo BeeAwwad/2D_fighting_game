@@ -13,7 +13,6 @@ import {
   shopSprite,
 } from "../gameSprites/gameSprites"
 import useCountdown from "./useCountdown"
-
 const useBetterGame = () => {
   const ref = useRef(null)
   const playerRef = useRef(playerSprite)
@@ -69,11 +68,17 @@ const useBetterGame = () => {
         rectangle1: playerRef.current,
         rectangle2: enemyRef.current,
       }) &&
-      playerRef.current.isAttacking
+      playerRef.current.isAttacking &&
+      playerRef.current.frameCurrent === 4
     ) {
       playerRef.current.isAttacking = false
       enemyRef.current.health = Math.max(enemyRef.current.health - 10, 0)
       setEnemyHealth(enemyRef.current.health)
+    }
+
+    // change isAttacking back to false
+    if (playerRef.current.isAttacking && playerRef.current.frameCurrent === 4) {
+      playerRef.current.isAttacking = false
     }
 
     // detect successful enemy attack
@@ -82,12 +87,18 @@ const useBetterGame = () => {
         rectangle1: enemyRef.current,
         rectangle2: playerRef.current,
       }) &&
-      enemyRef.current.isAttacking
+      enemyRef.current.isAttacking &&
+      enemyRef.current.frameCurrent === 2
     ) {
       enemyRef.current.isAttacking = false
       playerRef.current.health = Math.max(playerRef.current.health - 10, 0)
       setPlayerHealth(playerRef.current.health)
     }
+  }
+
+  // change isAttacking back to false
+  if (enemyRef.current.isAttacking && enemyRef.current.frameCurrent === 2) {
+    enemyRef.current.isAttacking = false
   }
 
   const render = (ctx, cnv) => {

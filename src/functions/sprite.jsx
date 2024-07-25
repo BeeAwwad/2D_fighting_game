@@ -58,13 +58,13 @@ export class Fighter extends Sprite {
   constructor({
     position,
     velocity,
-    offset,
+    // offset,
     imageSrc,
     scale = 1,
     framesMax = 1,
     imageOffset = { x: 0, y: 0 },
     sprites,
-    attackCooldownTime = 800,
+    attackBox = { offset: {}, width: undefined, height: undefined },
   }) {
     super({
       position,
@@ -83,14 +83,11 @@ export class Fighter extends Sprite {
         x: this.position.x,
         y: this.position.y,
       },
-      offset: { x: offset.x, y: offset.y },
-      width: 100,
-      height: 50,
+      offset: attackBox.offset,
+      width: attackBox.width,
+      height: attackBox.height,
     }
     this.isAttacking = false
-    this.attackCooldown = false
-    this.attackCooldownTime = attackCooldownTime
-    this.attackCooldownEndTime = 0
     this.health = 100
     this.frameCurrent = 0
     this.frameElasped = 0
@@ -109,7 +106,7 @@ export class Fighter extends Sprite {
     }
 
     this.attackBox.position.x = this.position.x + this.attackBox.offset.x
-    this.attackBox.position.y = this.position.y
+    this.attackBox.position.y = this.position.y + this.attackBox.offset.y
 
     this.position.x += this.velocity.x
     this.position.y += this.velocity.y
@@ -130,17 +127,8 @@ export class Fighter extends Sprite {
   }
 
   attack() {
-    if (!this.isAttacking && !this.attackCooldown) {
-      this.switchSprites("attackOne")
-      this.isAttacking = true
-      this.attackCooldown = true
-      setTimeout(() => {
-        this.isAttacking = false
-        this.attackCooldown = false
-      }, this.attackCooldownTime)
-
-      this.attackCooldownEndTime = Date.now + this.attackCooldownTime
-    }
+    this.switchSprites("attackOne")
+    this.isAttacking = true
   }
 
   switchSprites(sprite) {

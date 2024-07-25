@@ -16,7 +16,6 @@ export const DrawPlayer = (ctx, sprite) => {
     sprite.width,
     sprite.height
   )
-
   // attack box
   if (sprite.isttacking) {
     ctx.fillStyle = sprite.color.attack

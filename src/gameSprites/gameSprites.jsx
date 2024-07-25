@@ -25,10 +25,6 @@ export const playerSprite = new Fighter({
     x: 0,
     y: 0,
   },
-  offset: {
-    x: 0,
-    y: 0,
-  },
   imageOffset: {
     x: 215,
     y: 225,
@@ -55,6 +51,14 @@ export const playerSprite = new Fighter({
       framesMax: 6,
     },
   },
+  attackBox: {
+    offset: {
+      x: 75,
+      y: -30,
+    },
+    width: 145,
+    height: 50,
+  },
 })
 
 export const botSprite = new Fighter({
@@ -67,10 +71,6 @@ export const botSprite = new Fighter({
   scale: 2.3,
   velocity: {
     x: 0,
-    y: 0,
-  },
-  offset: {
-    x: -50,
     y: 0,
   },
   imageOffset: {
@@ -98,6 +98,14 @@ export const botSprite = new Fighter({
       imageSrc: kenjiAttackOne,
       framesMax: 4,
     },
+  },
+  attackBox: {
+    offset: {
+      x: -165,
+      y: -30,
+    },
+    width: 125,
+    height: 50,
   },
 })
 

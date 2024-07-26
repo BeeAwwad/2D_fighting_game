@@ -72,11 +72,11 @@ const useBetterGame = () => {
       playerRef.current.frameCurrent === 4
     ) {
       playerRef.current.isAttacking = false
-      enemyRef.current.health = Math.max(enemyRef.current.health - 10, 0)
+      enemyRef.current.takeHit()
       setEnemyHealth(enemyRef.current.health)
     }
 
-    // change isAttacking back to false
+    // change player isAttacking back to false
     if (playerRef.current.isAttacking && playerRef.current.frameCurrent === 4) {
       playerRef.current.isAttacking = false
     }
@@ -91,12 +91,12 @@ const useBetterGame = () => {
       enemyRef.current.frameCurrent === 2
     ) {
       enemyRef.current.isAttacking = false
-      playerRef.current.health = Math.max(playerRef.current.health - 10, 0)
+      playerRef.current.takeHit()
       setPlayerHealth(playerRef.current.health)
     }
   }
 
-  // change isAttacking back to false
+  // change enemy isAttacking back to false
   if (enemyRef.current.isAttacking && enemyRef.current.frameCurrent === 2) {
     enemyRef.current.isAttacking = false
   }

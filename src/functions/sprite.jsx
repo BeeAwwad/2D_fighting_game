@@ -123,6 +123,13 @@ export class Fighter extends Sprite {
     if (this.ctx && this.image.complete) {
       this.draw()
       this.animateFrames()
+
+      // this.ctx.fillRect(
+      //   this.attackBox.position.x,
+      //   this.attackBox.position.y,
+      //   this.attackBox.width,
+      //   this.attackBox.height
+      // )
     }
   }
 
@@ -131,10 +138,26 @@ export class Fighter extends Sprite {
     this.isAttacking = true
   }
 
+  takeHit() {
+    this.health -= 10
+    this.switchSprites("takeHit")
+    // if (this.health <= 0) {
+    //   this.switchSprites("death")
+    // } else {
+    //   this.switchSprites("takeHit")
+    // }
+  }
+
   switchSprites(sprite) {
+    // overriding all other animations
     if (
       this.image === this.sprites.attackOne.image &&
       this.frameCurrent < this.sprites.attackOne.framesMax - 1
+    )
+      return
+    if (
+      this.image === this.sprites.takeHit.image &&
+      this.frameCurrent < this.sprites.takeHit.framesMax - 1
     )
       return
 
@@ -171,6 +194,13 @@ export class Fighter extends Sprite {
         if (this.image !== this.sprites.attackOne.image) {
           this.image = this.sprites.attackOne.image
           this.framesMax = this.sprites.attackOne.framesMax
+          this.frameCurrent = 0
+        }
+        break
+      case "takeHit":
+        if (this.image !== this.sprites.takeHit.image) {
+          this.image = this.sprites.takeHit.image
+          this.framesMax = this.sprites.takeHit.framesMax
           this.frameCurrent = 0
         }
         break

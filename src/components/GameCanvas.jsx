@@ -1,12 +1,10 @@
-// import useGame from "../hooks/useGame"
-import useBetterGame from "../hooks/useBetterGame"
+import useGame from "../hooks/useGame"
 import GameBar from "./topBarComponents/GameBar"
 import gameWorld from "../gameObjects/gameWorld"
 import { MatchResult } from "./MatchResult"
 
 const GameCanvas = () => {
-  // const [ref, currentPlayer, currentEnemy, time, fightResults] = useGame()
-  const [ref, currentPlayer, currentEnemy, time, fightResults] = useBetterGame()
+  const [ref, currentPlayer, currentEnemy, time, fightResults] = useGame()
   return (
     <div className="relative inline-block">
       <GameBar player={currentPlayer} enemy={currentEnemy} time={time} />

@@ -6,12 +6,14 @@ import samuraiFall from "/samuraiMack/Fall.png"
 import samuraiAttackOne from "/samuraiMack/Attack1.png"
 // import samuraiTakeHit from "/samuraiMack/TakeHit.png"
 import samuraiTakeHitWhite from "/samuraiMack/TakeHitWhiteSilhouette.png"
+import samuraiDeath from "/samuraiMack/Death.png"
 import kenjiIdle from "/kenji/Idle.png"
 import kenjiRun from "/kenji/Run.png"
 import kenjiJump from "/kenji/Jump.png"
 import kenjiFall from "/kenji/Fall.png"
 import kenjiAttackOne from "/kenji/Attack1.png"
 import kenjiTakeHit from "/kenji/TakeHit.png"
+import kenjiDeath from "/kenji/Death.png"
 import backgroundImage from "/background.png"
 import shopImage from "/shop.png"
 
@@ -56,6 +58,10 @@ export const playerSprite = new Fighter({
     takeHit: {
       imageSrc: samuraiTakeHitWhite,
       framesMax: 4,
+    },
+    death: {
+      imageSrc: samuraiDeath,
+      framesMax: 6,
     },
   },
   attackBox: {
@@ -108,6 +114,10 @@ export const botSprite = new Fighter({
     takeHit: {
       imageSrc: kenjiTakeHit,
       framesMax: 3,
+    },
+    death: {
+      imageSrc: kenjiDeath,
+      framesMax: 7,
     },
   },
   attackBox: {

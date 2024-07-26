@@ -1,7 +1,28 @@
 const botBehaviour = (bot, player) => {
-  // Implement bot logic here
+  // Check if the player is within the attack range of the bot
+  const playerInRange =
+    player.position.x + player.width > bot.attackBox.position.x &&
+    player.position.x < bot.attackBox.position.x + bot.attackBox.width &&
+    player.position.y + player.height > bot.attackBox.position.y &&
+    player.position.y < bot.attackBox.position.y + bot.attackBox.height
 
-  if (bot.position.x + bot.attackBox.width < player.position.x) {
+  // Implement bot logic here
+  if (player.health <= 0) {
+    bot.isAttacking = false
+    bot.switchSprites("idle")
+    return
+  }
+
+  if (playerInRange) {
+    // If the player is within range, attack
+    bot.velocity.x = 0
+    bot.switchSprites("idle")
+    if (!bot.isAttacking && !bot.attackCooldown) {
+      bot.attack()
+      bot.attackCooldown = true
+      bot.attackCooldownEndTime = Date.now() + bot.attackCooldownTime
+    }
+  } else if (bot.position.x + bot.attackBox.width < player.position.x) {
     // Move the bot right
     bot.velocity.x = 1
     bot.switchSprites("run")
@@ -13,7 +34,6 @@ const botBehaviour = (bot, player) => {
     // Stop moving if the bot is aligned with the player
     bot.velocity.x = 0
     bot.switchSprites("idle")
-    bot.attack()
   }
 }
 

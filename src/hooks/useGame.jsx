@@ -13,7 +13,7 @@ import {
   shopSprite,
 } from "../gameSprites/gameSprites"
 import useCountdown from "./useCountdown"
-const useBetterGame = () => {
+const useGame = () => {
   const ref = useRef(null)
   const playerRef = useRef(playerSprite)
   const enemyRef = useRef(botSprite)
@@ -59,8 +59,6 @@ const useBetterGame = () => {
     } else if (playerRef.current.velocity.y > 0) {
       playerRef.current.switchSprites("fall")
     }
-    // Bot behavior
-    botBehaviour(enemyRef.current, playerRef.current)
 
     // detect successful player attack
     if (
@@ -69,7 +67,7 @@ const useBetterGame = () => {
         rectangle2: enemyRef.current,
       }) &&
       playerRef.current.isAttacking &&
-      playerRef.current.frameCurrent === 4
+      playerRef.current.framesCurrent === 4
     ) {
       playerRef.current.isAttacking = false
       enemyRef.current.takeHit()
@@ -77,7 +75,10 @@ const useBetterGame = () => {
     }
 
     // change player isAttacking back to false
-    if (playerRef.current.isAttacking && playerRef.current.frameCurrent === 4) {
+    if (
+      playerRef.current.isAttacking &&
+      playerRef.current.framesCurrent === 4
+    ) {
       playerRef.current.isAttacking = false
     }
 
@@ -88,17 +89,20 @@ const useBetterGame = () => {
         rectangle2: playerRef.current,
       }) &&
       enemyRef.current.isAttacking &&
-      enemyRef.current.frameCurrent === 2
+      enemyRef.current.framesCurrent === 2
     ) {
       enemyRef.current.isAttacking = false
       playerRef.current.takeHit()
       setPlayerHealth(playerRef.current.health)
     }
-  }
 
-  // change enemy isAttacking back to false
-  if (enemyRef.current.isAttacking && enemyRef.current.frameCurrent === 2) {
-    enemyRef.current.isAttacking = false
+    // change enemy isAttacking back to false
+    if (enemyRef.current.isAttacking && enemyRef.current.framesCurrent === 2) {
+      enemyRef.current.isAttacking = false
+    }
+
+    // Bot behavior
+    botBehaviour(enemyRef.current, playerRef.current)
   }
 
   const render = (ctx, cnv) => {
@@ -106,10 +110,10 @@ const useBetterGame = () => {
     DrawCanvas(ctx)
 
     //render images
-    backgroundSprite.render()
-    shopSprite.render()
-    playerRef.current.render()
-    enemyRef.current.render()
+    backgroundSprite.renderImage()
+    shopSprite.renderImage()
+    playerRef.current.renderFighter()
+    enemyRef.current.renderFighter()
   }
 
   const gameLoop = (ctx, cnv) => {
@@ -144,4 +148,4 @@ const useBetterGame = () => {
   ]
 }
 
-export default useBetterGame
+export default useGame

@@ -5,15 +5,17 @@ import Keys from "../gameObjects/keys"
 const useKeyboardMouse = (playerSprite) => {
   useEffect(() => {
     const handleKeyDown = (e) => {
-      if (e.key === "d") {
-        Keys.d.pressed = true
-        playerSprite.lastKey = "d"
-      } else if (e.key === "a") {
-        Keys.a.pressed = true
-        playerSprite.lastKey = "a"
-      } else if (e.key === " ") {
-        playerSprite.velocity.y = -10
-        Keys.space.pressed = true
+      if (!playerSprite.isDead) {
+        if (e.key === "d") {
+          Keys.d.pressed = true
+          playerSprite.lastKey = "d"
+        } else if (e.key === "a") {
+          Keys.a.pressed = true
+          playerSprite.lastKey = "a"
+        } else if (e.key === " ") {
+          playerSprite.velocity.y = -10
+          Keys.space.pressed = true
+        }
       }
     }
 
@@ -28,8 +30,10 @@ const useKeyboardMouse = (playerSprite) => {
     }
 
     const handleAttack = (e) => {
-      if (e.button === 0) {
-        playerSprite.attack()
+      if (!playerSprite.dead) {
+        if (e.button === 0) {
+          playerSprite.attack()
+        }
       }
     }
 

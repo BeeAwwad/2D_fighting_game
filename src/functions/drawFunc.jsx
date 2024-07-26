@@ -28,10 +28,10 @@ export const DrawPlayer = (ctx, sprite) => {
   }
 }
 
-export const DrawImage = (ctx, sprite, scale, framesMax, frameCurrent) => {
+export const DrawImage = (ctx, sprite, scale, framesMax, framesCurrent) => {
   ctx.drawImage(
     sprite.image,
-    frameCurrent * (sprite.image.width / framesMax),
+    framesCurrent * (sprite.image.width / framesMax),
     0,
     sprite.image.width / framesMax,
     sprite.image.height,

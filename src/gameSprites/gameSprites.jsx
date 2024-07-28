@@ -4,8 +4,8 @@ import samuraiRun from "/samuraiMack/Run.png"
 import samuraiJump from "/samuraiMack/Jump.png"
 import samuraiFall from "/samuraiMack/Fall.png"
 import samuraiAttackOne from "/samuraiMack/Attack1.png"
-// import samuraiTakeHit from "/samuraiMack/TakeHit.png"
-import samuraiTakeHitWhite from "/samuraiMack/TakeHitWhiteSilhouette.png"
+import samuraiTakeHit from "/samuraiMack/TakeHit.png"
+// import samuraiTakeHitWhite from "/samuraiMack/TakeHitWhiteSilhouette.png"
 import samuraiDeath from "/samuraiMack/Death.png"
 import kenjiIdle from "/kenji/Idle.png"
 import kenjiRun from "/kenji/Run.png"
@@ -18,6 +18,7 @@ import backgroundImage from "/background.png"
 import shopImage from "/shop.png"
 
 export const playerSprite = new Fighter({
+  fighterType: "rightFacing",
   position: {
     x: 100,
     y: 100,
@@ -31,8 +32,8 @@ export const playerSprite = new Fighter({
     y: 0,
   },
   imageOffset: {
-    x: 215,
-    y: 225,
+    x: 205,
+    y: 130,
   },
   sprites: {
     idle: {
@@ -56,7 +57,7 @@ export const playerSprite = new Fighter({
       framesMax: 6,
     },
     takeHit: {
-      imageSrc: samuraiTakeHitWhite,
+      imageSrc: samuraiTakeHit,
       framesMax: 4,
     },
     death: {
@@ -67,14 +68,19 @@ export const playerSprite = new Fighter({
   attackBox: {
     offset: {
       x: 75,
-      y: -30,
+      y: 30,
     },
     width: 145,
     height: 50,
   },
+  color: {
+    body: "#3E8EDE",
+    attack: "#2B3784",
+  },
 })
 
 export const botSprite = new Fighter({
+  fighterType: "leftFacing",
   position: {
     x: 600,
     y: 100,
@@ -87,8 +93,8 @@ export const botSprite = new Fighter({
     y: 0,
   },
   imageOffset: {
-    x: 215,
-    y: 235,
+    x: 205,
+    y: 143,
   },
   sprites: {
     idle: {
@@ -123,10 +129,14 @@ export const botSprite = new Fighter({
   attackBox: {
     offset: {
       x: -165,
-      y: -30,
+      y: 30,
     },
     width: 125,
     height: 50,
+  },
+  color: {
+    body: "#66CDAA",
+    attack: "#A9C53D",
   },
 })
 

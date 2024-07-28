@@ -12,3 +12,19 @@ export const rectangularCollision = ({ rectangle1, rectangle2 }) => {
     rectangle1.attackBox.position.y <= rectangle2.position.y + rectangle2.height
   )
 }
+
+export const isPlayerFacingEnemy = (player, enemy) => {
+  if (
+    enemy.position.x + enemy.imageOffset.x >
+    player.position.x + player.imageOffset.x
+  ) {
+    player.isFacing = "right"
+    enemy.isFacing = "left"
+  } else if (
+    player.position.x + player.imageOffset.x >
+    enemy.position.x + enemy.imageOffset.x
+  ) {
+    player.isFacing = "left"
+    enemy.isFacing = "right"
+  }
+}

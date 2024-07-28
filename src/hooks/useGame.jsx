@@ -3,7 +3,10 @@ import Keys from "../gameObjects/keys"
 import { DrawCanvas } from "../functions/drawFunc"
 import { whoWon } from "../functions/whoWon"
 import botBehaviour from "../functions/botBehaviour"
-import { rectangularCollision } from "../functions/rectangularCollision"
+import {
+  rectangularCollision,
+  isPlayerFacingEnemy,
+} from "../functions/fightersInteraction"
 import useKeyboardMouse from "./useKeyboardMouse"
 
 import {
@@ -43,6 +46,7 @@ const useGame = () => {
 
     // fighter movement logic
     playerRef.current.velocity.x = 0
+    enemyRef.current.velocity.x = 0
 
     if (Keys.a.pressed && playerRef.current.lastKey === "a") {
       playerRef.current.velocity.x = -3
@@ -59,6 +63,16 @@ const useGame = () => {
     } else if (playerRef.current.velocity.y > 0) {
       playerRef.current.switchSprites("fall")
     }
+
+    if (enemyRef.current.velocity.y < 0) {
+      enemyRef.current.switchSprites("jump")
+    } else if (enemyRef.current.velocity.y > 0) {
+      enemyRef.current.switchSprites("fall")
+    } else {
+      enemyRef.current.switchSprites("idle")
+    }
+
+    isPlayerFacingEnemy(playerRef.current, enemyRef.current)
 
     // detect successful player attack
     if (
@@ -102,7 +116,7 @@ const useGame = () => {
     }
 
     // Bot behavior
-    botBehaviour(enemyRef.current, playerRef.current)
+    // botBehaviour(enemyRef.current, playerRef.current)
   }
 
   const render = (ctx, cnv) => {

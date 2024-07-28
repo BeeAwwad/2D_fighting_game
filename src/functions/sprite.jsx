@@ -1,4 +1,9 @@
-import { DrawImage } from "./drawFunc"
+import {
+  DrawImage,
+  DrawFlippedImage,
+  HandleAttackInvert,
+  DrawPlayer,
+} from "./drawFunc"
 import gameWorld from "../gameObjects/gameWorld"
 
 export class Sprite {
@@ -56,15 +61,16 @@ export class Sprite {
 
 export class Fighter extends Sprite {
   constructor({
+    fighterType,
     position,
     velocity,
-    // offset,
     imageSrc,
     scale = 1,
     framesMax = 1,
     imageOffset = { x: 0, y: 0 },
     sprites,
     attackBox = { offset: {}, width: undefined, height: undefined },
+    color,
   }) {
     super({
       position,
@@ -74,7 +80,9 @@ export class Fighter extends Sprite {
       imageOffset,
     })
 
+    this.fighterType = fighterType
     this.velocity = velocity
+    this.isFacing = null
     this.canvasHeight = gameWorld.canvasHeight
     this.gravity = gameWorld.gravity
     this.lastKey = null
@@ -87,6 +95,7 @@ export class Fighter extends Sprite {
       width: attackBox.width,
       height: attackBox.height,
     }
+    this.color = color.body
     this.isAttacking = false
     this.health = 100
     this.framesCurrent = 0
@@ -108,18 +117,34 @@ export class Fighter extends Sprite {
       this.attackCooldown = false
     }
 
-    this.attackBox.position.x = this.position.x + this.attackBox.offset.x
-    this.attackBox.position.y = this.position.y + this.attackBox.offset.y
+    HandleAttackInvert(this, this.fighterType, this.isFacing)
 
     this.position.x += this.velocity.x
     this.position.y += this.velocity.y
 
-    if (this.position.y + this.height + this.velocity.y >= this.canvasHeight) {
+    if (
+      this.position.y + this.height + this.velocity.y >=
+      this.canvasHeight - 95
+    ) {
       this.velocity.y = 0
-      this.position.y = 426.69999999999993
+      // this.position.y = 426.69999999999993
     } else {
       this.velocity.y += this.gravity
     }
+  }
+
+  draw() {
+    DrawPlayer(this.ctx, this, this.color)
+
+    DrawFlippedImage(
+      this.ctx,
+      this,
+      this.scale,
+      this.framesMax,
+      this.framesCurrent,
+      this.isFacing,
+      this.fighterType
+    )
   }
 
   renderFighter() {
@@ -131,13 +156,6 @@ export class Fighter extends Sprite {
       } else {
         return
       }
-
-      // this.ctx.fillRect(
-      //   this.attackBox.position.x,
-      //   this.attackBox.position.y,
-      //   this.attackBox.width,
-      //   this.attackBox.height
-      // )
     }
   }
 

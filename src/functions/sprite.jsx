@@ -51,7 +51,7 @@ export class Sprite {
     }
   }
 
-  renderImage() {
+  render() {
     if (this.ctx && this.image.complete) {
       this.draw()
       this.animateFrames()
@@ -100,7 +100,7 @@ export class Fighter extends Sprite {
     this.health = 100
     this.framesCurrent = 0
     this.frameElasped = 0
-    this.frameHold = 12
+    this.frameHold = 7
     this.sprites = sprites
     this.isDead = false
     this.attackCooldown = false
@@ -112,14 +112,17 @@ export class Fighter extends Sprite {
     }
   }
 
-  update() {
-    if (this.attackCooldown && Date.now() >= this.attackCooldownEndTime) {
+  update(secondsPassed) {
+    if (
+      this.attackCooldown &&
+      performance.now() >= this.attackCooldownEndTime
+    ) {
       this.attackCooldown = false
     }
 
     HandleAttackInvert(this, this.fighterType, this.isFacing)
 
-    this.position.x += this.velocity.x
+    this.position.x += this.velocity.x * secondsPassed
     this.position.y += this.velocity.y
 
     if (
@@ -147,7 +150,7 @@ export class Fighter extends Sprite {
     )
   }
 
-  renderFighter() {
+  render() {
     if (this.ctx && this.image.complete) {
       this.draw()
 
@@ -245,6 +248,42 @@ export class Fighter extends Sprite {
           this.framesCurrent = 0
         }
         break
+    }
+  }
+}
+
+export class FpsCounter {
+  constructor() {
+    this.fps = 0
+    this.ctx = null
+    this.lastTime = 0
+  }
+
+  update(secondsPassed) {
+    if (secondsPassed) {
+      this.fps = Math.trunc(1 / secondsPassed)
+    }
+  }
+
+  setContext(ctx) {
+    if (ctx == null) {
+      throw new Error("Context cannot be null")
+    }
+    this.ctx = ctx
+  }
+
+  draw() {
+    if (this.ctx) {
+      this.ctx.font = "bold 30px Copperplate, Papyrus, fantasy"
+      this.ctx.fillStyle = "white"
+      this.ctx.textAlign = "center"
+      this.ctx.fillText(`FPS: ${this.fps}`, this.ctx.canvas.width / 2, 30)
+    }
+  }
+
+  render() {
+    if (this.ctx) {
+      this.draw()
     }
   }
 }

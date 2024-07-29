@@ -1,4 +1,4 @@
-import { Fighter, Sprite } from "../functions/sprite"
+import { Fighter, Sprite, FpsCounter } from "../functions/sprite"
 import samuraiIdle from "/samuraiMack/Idle.png"
 import samuraiRun from "/samuraiMack/Run.png"
 import samuraiJump from "/samuraiMack/Jump.png"
@@ -157,3 +157,5 @@ export const shopSprite = new Sprite({
   scale: 2.75,
   framesMax: 6,
 })
+
+export const SystemFps = new FpsCounter()
